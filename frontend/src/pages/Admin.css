@@ -47,8 +47,17 @@
 }
 
 .stat-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 0.45rem 0.9rem;
+  margin: 0 auto 1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #166534;
+  background: #dcfce7;
 }
 
 .stat-card h3 {
@@ -61,7 +70,7 @@
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 700;
   color: #10b981;
   margin: 0;
@@ -111,7 +120,16 @@
 }
 
 .action-icon {
-  font-size: 3rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: #dcfce7;
+  color: #166534;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
   margin-bottom: 1rem;
 }
 

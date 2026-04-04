@@ -1,32 +1,42 @@
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
-// Component Footer tái sử dụng
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>PizzaApp</h3>
-            <p>Delicious pizzas delivered to your door.</p>
-          </div>
-          <div className="footer-section">
-            <h4>Quick Links</h4>
+      <div className="container footer-content">
+        <div className="footer-panel">
+          <p className="footer-eyebrow">Green Slice Pizza</p>
+          <h3>Fresh dough, bright ingredients, reliable delivery.</h3>
+          <p>
+            Built for a smoother ordering flow from menu browsing to checkout.
+          </p>
+        </div>
+
+        <div className="footer-links">
+          <div>
+            <h4>Explore</h4>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/menu">Menu</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/menu">Menu</Link></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/cart">Cart</Link></li>
+              <li><Link to="/checkout">Checkout</Link></li>
             </ul>
           </div>
-          <div className="footer-section">
-            <h4>Contact Us</h4>
-            <p>Email: info@pizzaapp.com</p>
-            <p>Phone: +1 234 567 890</p>
+
+          <div>
+            <h4>Support</h4>
+            <ul>
+              <li><a href="mailto:hello@greenslice.vn">hello@greenslice.vn</a></li>
+              <li><a href="tel:+84901234567">+84 901 234 567</a></li>
+              <li><span>Open daily 09:00 - 22:00</span></li>
+            </ul>
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; 2026 PizzaApp. All rights reserved.</p>
-        </div>
+      </div>
+      <div className="container footer-bottom">
+        <p>© 2026 Green Slice Pizza. Crafted for fast ordering and clean UX.</p>
       </div>
     </footer>
   );

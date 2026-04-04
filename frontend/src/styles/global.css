@@ -1,110 +1,94 @@
-/* Global Styles for Pizza Ordering System */
+:root {
+  --primary-color: #16a34a;
+  --primary-dark: #14532d;
+  --secondary-color: #64748b;
+  --accent-color: #f59e0b;
+  --danger-color: #dc2626;
+  --light-color: #f8faf8;
+  --dark-color: #0f172a;
+  --border-color: rgba(22, 101, 52, 0.12);
+  --surface-color: #ffffff;
+  --container-width: 1200px;
+  --font-body: 'Aptos', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --font-heading: 'Aptos Display', 'Aptos', 'Trebuchet MS', sans-serif;
+}
 
-/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top left, rgba(22, 163, 74, 0.08), transparent 24%),
+    linear-gradient(180deg, #f8faf8 0%, #eef5ef 100%);
+  color: #1f2937;
   line-height: 1.6;
 }
 
-/* Theme Colors */
-:root {
-  --primary-color: #28a745; /* Xanh lá chính */
-  --secondary-color: #6c757d;
-  --accent-color: #ffc107;
-  --danger-color: #dc3545;
-  --light-color: #f8f9fa;
-  --dark-color: #343a40;
-  --border-color: #dee2e6;
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+button {
+  font-family: inherit;
 }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #218838;
-}
-
-.btn-secondary {
-  background-color: var(--secondary-color);
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-/* Cards */
-.card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 20px 0;
-}
-
-/* Forms */
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
+img {
+  max-width: 100%;
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 16px;
+#root {
+  min-height: 100vh;
 }
 
-/* Grid Layout */
-.grid {
+.container {
+  width: min(var(--container-width), calc(100% - 40px));
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  line-height: 1.05;
+  color: #0f172a;
+}
+
+p {
+  color: inherit;
+}
+
+.section-kicker {
+  display: inline-flex;
+  width: fit-content;
+  color: #15803d;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.loading-screen {
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  place-items: center;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .container {
-    padding: 0 10px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
+    width: min(var(--container-width), calc(100% - 24px));
   }
 }

@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { formatCurrency } from '../utils/format';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import './AdminOrders.css';
 
-// Admin Orders Management Page
+const statusLabels = {
+  pending: 'Pending',
+  confirmed: 'Confirmed',
+  preparing: 'Preparing',
+  ready: 'Ready',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled',
+};
+
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +21,6 @@ const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  // Fetch orders
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -21,10 +29,10 @@ const AdminOrders = () => {
     try {
       setLoading(true);
       const response = await api.get('/orders');
-      const ordersData = response.data.data?.orders || [];
-      setOrders(ordersData);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
+      setOrders(response.data.data?.orders || []);
+      setError('');
+    } catch (requestError) {
+      console.error('Error fetching orders:', requestError);
       setError('Failed to load orders');
     } finally {
       setLoading(false);
@@ -33,11 +41,11 @@ const AdminOrders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await api.put(`/orders/${orderId}/status`, { status: newStatus });
+      await api.put(`/orders/${orderId}`, { status: newStatus });
       fetchOrders();
-    } catch (error) {
-      console.error('Error updating status:', error);
-      setError(error.response?.data?.message || 'Failed to update order status');
+    } catch (requestError) {
+      console.error('Error updating status:', requestError);
+      setError(requestError.response?.data?.message || 'Failed to update order status');
     }
   };
 
@@ -46,32 +54,15 @@ const AdminOrders = () => {
     setShowDetails(true);
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'status-pending';
-      case 'preparing':
-        return 'status-preparing';
-      case 'delivering':
-        return 'status-delivering';
-      case 'completed':
-        return 'status-completed';
-      case 'cancelled':
-        return 'status-cancelled';
-      default:
-        return '';
-    }
-  };
+  const getStatusColor = (status) => `status-${status}`;
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   if (loading) {
     return (
@@ -90,9 +81,12 @@ const AdminOrders = () => {
       <Navbar />
       <div className="admin-container">
         <div className="admin-header">
-          <h1>Order Management</h1>
-          <button className="btn btn-secondary" onClick={fetchOrders}>
-            🔄 Refresh
+          <div>
+            <p className="section-kicker">Kitchen flow</p>
+            <h1>Order Management</h1>
+          </div>
+          <button className="btn btn-secondary" onClick={fetchOrders} type="button">
+            Refresh
           </button>
         </div>
 
@@ -103,26 +97,26 @@ const AdminOrders = () => {
             <div className="modal modal-lg">
               <div className="modal-header">
                 <h2>Order Details #{selectedOrder.id}</h2>
-                <button className="close-btn" onClick={() => setShowDetails(false)}>×</button>
+                <button className="close-btn" onClick={() => setShowDetails(false)} type="button">×</button>
               </div>
               <div className="order-details">
                 <div className="details-section">
                   <h3>Customer Information</h3>
                   <p><strong>Name:</strong> {selectedOrder.customerName}</p>
-                  <p><strong>Email:</strong> {selectedOrder.User?.email}</p>
+                  <p><strong>Email:</strong> {selectedOrder.user?.email || 'N/A'}</p>
                   <p><strong>Phone:</strong> {selectedOrder.phoneNumber}</p>
                   <p><strong>Address:</strong> {selectedOrder.deliveryAddress}</p>
                 </div>
 
                 <div className="details-section">
                   <h3>Order Items</h3>
-                  {selectedOrder.OrderItems && selectedOrder.OrderItems.length > 0 ? (
+                  {selectedOrder.items && selectedOrder.items.length > 0 ? (
                     <ul className="items-list">
-                      {selectedOrder.OrderItems.map((item) => (
+                      {selectedOrder.items.map((item) => (
                         <li key={item.id}>
-                          <strong>{item.Product?.name}</strong>
+                          <strong>{item.productName || item.product?.name}</strong>
                           <span>x{item.quantity}</span>
-                          <span>${(item.unitPrice * item.quantity).toFixed(2)}</span>
+                          <span>{formatCurrency(item.totalPrice)}</span>
                         </li>
                       ))}
                     </ul>
@@ -133,8 +127,8 @@ const AdminOrders = () => {
 
                 <div className="details-section">
                   <h3>Order Summary</h3>
-                  <p><strong>Status:</strong> <span className={`badge ${getStatusColor(selectedOrder.status)}`}>{selectedOrder.status}</span></p>
-                  <p><strong>Total Amount:</strong> ${parseFloat(selectedOrder.totalAmount).toFixed(2)}</p>
+                  <p><strong>Status:</strong> <span className={`badge ${getStatusColor(selectedOrder.status)}`}>{statusLabels[selectedOrder.status]}</span></p>
+                  <p><strong>Total Amount:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
                   <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
                   <p><strong>Special Instructions:</strong> {selectedOrder.specialInstructions || 'None'}</p>
                   <p><strong>Ordered at:</strong> {formatDate(selectedOrder.createdAt)}</p>
@@ -161,18 +155,16 @@ const AdminOrders = () => {
                 <tr key={order.id}>
                   <td>#{order.id}</td>
                   <td>{order.customerName}</td>
-                  <td>${parseFloat(order.totalAmount).toFixed(2)}</td>
+                  <td>{formatCurrency(order.totalAmount)}</td>
                   <td>
                     <select
                       className={`status-select ${getStatusColor(order.status)}`}
                       value={order.status}
-                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                      onChange={(event) => handleStatusChange(order.id, event.target.value)}
                     >
-                      <option value="pending">Pending</option>
-                      <option value="preparing">Preparing</option>
-                      <option value="delivering">Delivering</option>
-                      <option value="completed">Completed</option>
-                      <option value="cancelled">Cancelled</option>
+                      {Object.entries(statusLabels).map(([status, label]) => (
+                        <option key={status} value={status}>{label}</option>
+                      ))}
                     </select>
                   </td>
                   <td>{formatDate(order.createdAt)}</td>
@@ -180,8 +172,9 @@ const AdminOrders = () => {
                     <button
                       className="btn btn-sm btn-info"
                       onClick={() => handleViewDetails(order)}
+                      type="button"
                     >
-                      👁 View Details
+                      View Details
                     </button>
                   </td>
                 </tr>

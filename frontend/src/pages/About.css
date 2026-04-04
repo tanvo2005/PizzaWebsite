@@ -1,0 +1,190 @@
+.about-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 0 110px;
+  background:
+    linear-gradient(rgba(15, 23, 42, 0.58), rgba(15, 23, 42, 0.5)),
+    url('../assets/hero.png') center/cover;
+}
+
+.about-hero-content {
+  display: grid;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.about-hero-content .section-kicker,
+.about-hero-content h1,
+.about-hero-content p {
+  color: #ffffff;
+}
+
+.about-hero-content h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+}
+
+.about-hero-content p {
+  max-width: 700px;
+}
+
+.about-story,
+.about-ingredients,
+.about-team,
+.about-cta {
+  padding: 80px 0;
+}
+
+.home-section-heading {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.home-section-heading h2 {
+  margin: 0;
+}
+
+.about-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.about-story-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.about-story-copy h2,
+.about-ingredients h2,
+.about-team h2,
+.about-cta h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.about-story-copy p {
+  color: #52635b;
+}
+
+.about-story-visual img {
+  width: 100%;
+  border-radius: 32px;
+  min-height: 360px;
+  object-fit: cover;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+}
+
+.ingredients-grid,
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ingredient-card,
+.team-card {
+  padding: 24px;
+  border-radius: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(22, 101, 52, 0.08);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+.ingredient-card h3,
+.team-card h3 {
+  margin: 0 0 10px;
+}
+
+.ingredient-card p,
+.team-card p {
+  color: #5f6c62;
+}
+
+.ingredient-media {
+  width: 100%;
+  height: 180px;
+  margin-bottom: 18px;
+  border-radius: 22px;
+}
+
+.ingredient-cheese {
+  background:
+    radial-gradient(circle at 30% 30%, #fef3c7, transparent 28%),
+    linear-gradient(135deg, #fef9c3, #facc15);
+}
+
+.ingredient-tomato {
+  background:
+    radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.18), transparent 18%),
+    linear-gradient(135deg, #fca5a5, #dc2626);
+}
+
+.ingredient-dough {
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.18), transparent 22%),
+    linear-gradient(135deg, #fde68a, #d97706);
+}
+
+.team-avatar {
+  width: 68px;
+  height: 68px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #22c55e, #14532d);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.team-role {
+  margin-bottom: 12px;
+  color: #15803d !important;
+  font-weight: 700;
+}
+
+.about-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, #14532d, #22c55e);
+  box-shadow: 0 22px 50px rgba(21, 128, 61, 0.24);
+}
+
+.about-cta-card .section-kicker,
+.about-cta-card h2,
+.about-cta-card p {
+  color: #ffffff;
+}
+
+.about-cta-card h2 {
+  margin: 0 0 10px;
+}
+
+@media (max-width: 960px) {
+  .about-story-grid,
+  .ingredients-grid,
+  .team-grid,
+  .about-cta-card {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .about-hero {
+    padding: 100px 0 90px;
+  }
+}

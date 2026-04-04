@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import './Auth.css';
 
-// Page Register
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -20,23 +19,21 @@ const Register = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setError('');
     setLoading(true);
 
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
       return;
     }
 
-    // Validate password length
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
       setLoading(false);
@@ -47,11 +44,11 @@ const Register = () => {
     setLoading(false);
 
     if (result.success) {
-      // New users are always regular users, so redirect to home
-      navigate('/');
-    } else {
-      setError(result.message);
+      navigate('/menu');
+      return;
     }
+
+    setError(result.message);
   };
 
   return (
@@ -59,7 +56,8 @@ const Register = () => {
       <Navbar />
       <div className="auth-container">
         <div className="auth-card">
-          <h2>Create Account</h2>
+          <p className="section-kicker">Create account</p>
+          <h2>Register</h2>
           <form onSubmit={handleSubmit}>
             <InputField
               label="Full Name"
@@ -94,7 +92,7 @@ const Register = () => {
               required
             />
             {error && <div className="error-message">{error}</div>}
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" variant="primary" size="large" disabled={loading}>
               {loading ? 'Creating Account...' : 'Register'}
             </Button>
           </form>

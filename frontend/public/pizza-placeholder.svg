@@ -1,0 +1,15 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#f3f6f1"/>
+  <circle cx="600" cy="450" r="250" fill="#fde7bf"/>
+  <circle cx="600" cy="450" r="210" fill="#f4a261"/>
+  <circle cx="600" cy="450" r="190" fill="#f8d58a"/>
+  <circle cx="520" cy="380" r="28" fill="#dc2626"/>
+  <circle cx="700" cy="360" r="24" fill="#dc2626"/>
+  <circle cx="670" cy="520" r="28" fill="#dc2626"/>
+  <circle cx="500" cy="550" r="24" fill="#dc2626"/>
+  <circle cx="430" cy="470" r="22" fill="#dc2626"/>
+  <path d="M460 320C500 350 548 368 600 368C652 368 700 350 740 320" stroke="#15803d" stroke-width="18" stroke-linecap="round"/>
+  <path d="M420 450C460 478 528 500 600 500C672 500 740 478 780 450" stroke="#15803d" stroke-width="18" stroke-linecap="round"/>
+  <path d="M470 610C512 632 554 644 600 644C646 644 688 632 730 610" stroke="#15803d" stroke-width="18" stroke-linecap="round"/>
+  <text x="600" y="780" text-anchor="middle" fill="#166534" font-family="Aptos, Segoe UI, sans-serif" font-size="58" font-weight="700">Freshly baked pizza</text>
+</svg>

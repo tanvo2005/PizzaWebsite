@@ -6,6 +6,10 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import About from './pages/About';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProducts from './pages/AdminProducts';
 import AdminOrders from './pages/AdminOrders';
@@ -15,21 +19,58 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
+
+          {/* About is public because it is now a store introduction page.
+              We keep /profile mapped for backward compatibility. */}
+          <Route path="/about" element={<About />} />
+          <Route path="/profile" element={<About />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Private Routes */}
-          <Route path="/cart" element={<ProtectedRoute><div>Cart Page (Tạo sau)</div></ProtectedRoute>} />
-          <Route path="/checkout" element={<ProtectedRoute><div>Checkout Page (Tạo sau)</div></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><div>Profile Page (Tạo sau)</div></ProtectedRoute>} />
-
-          {/* Admin Routes */}
-          <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/products" element={<ProtectedRoute requiredRole="admin"><AdminProducts /></ProtectedRoute>} />
-          <Route path="/admin/orders" element={<ProtectedRoute requiredRole="admin"><AdminOrders /></ProtectedRoute>} />
+          <Route
+            path="/cart"
+            element={(
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/checkout"
+            element={(
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin"
+            element={(
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin/products"
+            element={(
+              <ProtectedRoute requiredRole="admin">
+                <AdminProducts />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin/orders"
+            element={(
+              <ProtectedRoute requiredRole="admin">
+                <AdminOrders />
+              </ProtectedRoute>
+            )}
+          />
         </Routes>
       </CartProvider>
     </AuthProvider>

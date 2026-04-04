@@ -1,8 +1,4 @@
-// middleware/errorHandler.js - Global Error Handler
-// Middleware này xử lý tất cả lỗi tập trung trong ứng dụng
-
 const errorHandler = (err, req, res, next) => {
-  // Log lỗi để debug
   console.error('Error occurred:', {
     message: err.message,
     stack: err.stack,
@@ -11,10 +7,8 @@ const errorHandler = (err, req, res, next) => {
     timestamp: new Date().toISOString()
   });
 
-  // Xử lý các loại lỗi cụ thể
   if (err.name === 'SequelizeValidationError') {
-    // Lỗi validation từ Sequelize
-    const errors = err.errors.map(error => ({
+    const errors = err.errors.map((error) => ({
       field: error.path,
       message: error.message,
       value: error.value
@@ -28,7 +22,6 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.name === 'SequelizeUniqueConstraintError') {
-    // Lỗi duplicate key
     return res.status(409).json({
       success: false,
       message: 'Duplicate entry',
@@ -37,7 +30,6 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.name === 'SequelizeForeignKeyConstraintError') {
-    // Lỗi foreign key
     return res.status(400).json({
       success: false,
       message: 'Invalid reference',
@@ -46,21 +38,33 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.name === 'JsonWebTokenError') {
-    // Lỗi JWT
     return res.status(401).json({
       success: false,
       message: 'Invalid token'
     });
   }
 
-  // Lỗi mặc định
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({
+      success: false,
+      message: 'Image must be smaller than 5MB'
+    });
+  }
+
+  if (err.message === 'Only image files are allowed') {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    });
+  }
+
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal server error';
 
   res.status(statusCode).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }) // Chỉ show stack trong dev
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 };
 

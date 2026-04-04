@@ -1,0 +1,132 @@
+.product-detail-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-detail-container {
+  padding: 28px 20px 80px;
+}
+
+.product-detail-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding: 26px;
+  border-radius: 32px;
+  background: #ffffff;
+  border: 1px solid rgba(22, 101, 52, 0.08);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.08);
+}
+
+.product-detail-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.product-detail-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.product-detail-back {
+  color: #15803d;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.product-detail-category {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.product-detail-copy h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.product-detail-price {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #15803d;
+}
+
+.product-detail-description {
+  color: #52635b;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.product-detail-meta {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.product-detail-meta div {
+  padding: 16px;
+  border-radius: 18px;
+  background: #f5fbf5;
+}
+
+.product-detail-meta span {
+  display: block;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.product-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.quantity-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #f0fdf4;
+}
+
+.quantity-picker button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 1.2rem;
+}
+
+.product-detail-state {
+  padding: 56px 28px;
+  text-align: center;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 900px) {
+  .product-detail-card,
+  .product-detail-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-media img {
+    min-height: 320px;
+  }
+}

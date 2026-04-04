@@ -1,44 +1,42 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import api from '../utils/api';
+import { AuthContext } from './auth-context';
 
-// Tạo AuthContext
-const AuthContext = createContext();
+// Read the authenticated user from localStorage once on bootstrap.
+// This keeps the app logged in after page refresh.
+const getStoredUser = () => {
+  const storedUser = localStorage.getItem('user');
 
-// Provider component
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch (error) {
+    console.error('Error parsing saved user data:', error);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    return null;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Thông tin user: { id, name, email, role }
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(getStoredUser);
 
-  // Kiểm tra token và user khi load app
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-
-    if (token && savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-        // Token sẽ được tự động gắn vào header bởi api interceptor
-      } catch (error) {
-        console.error('Error parsing saved user data:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-      }
-    }
-    setLoading(false);
-  }, []);
-
-  // Hàm login
+  // login:
+  // 1. Send credentials to backend.
+  // 2. Persist token + user in localStorage.
+  // 3. Update context state so the whole UI re-renders immediately.
   const login = async (email, password) => {
     try {
       const response = await api.post('/auth/login', { email, password });
       const { token, user: userData } = response.data.data;
 
-      // Lưu token và user vào localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
-
       setUser(userData);
+
       return { success: true, user: userData };
     } catch (error) {
       return {
@@ -48,17 +46,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Hàm register
+  // register follows the same persistence flow as login so the user
+  // is authenticated immediately after creating an account.
   const register = async (name, email, password) => {
     try {
       const response = await api.post('/auth/register', { name, email, password });
       const { token, user: userData } = response.data.data;
 
-      // Lưu token và user vào localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
-
       setUser(userData);
+
       return { success: true, user: userData };
     } catch (error) {
       return {
@@ -68,25 +66,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Hàm logout
+  // logout:
+  // Remove auth data and set user = null.
+  // Cart UI is cleared indirectly because CartContext derives its
+  // visible cart from the currently authenticated user.
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  const value = useMemo(() => ({
+    user,
+    isAuthenticated: Boolean(user),
+    loading: false,
+    login,
+    register,
+    logout
+  }), [user]);
 
-// Hook để sử dụng AuthContext
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,4 +1,3 @@
-/* Auth.css */
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -10,40 +9,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 40px 20px 80px;
 }
 
 .auth-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.94);
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 32px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
   width: 100%;
-  max-width: 400px;
-  text-align: center;
+  max-width: 460px;
+  display: grid;
+  gap: 18px;
 }
 
 .auth-card h2 {
-  margin-bottom: 30px;
-  color: var(--dark-color);
+  margin: 0;
+  font-size: 2.2rem;
 }
 
 .auth-card form {
-  margin-bottom: 20px;
+  display: grid;
+  gap: 16px;
 }
 
-.error {
+.error,
+.error-message {
   color: var(--danger-color);
-  margin-bottom: 15px;
 }
 
 .auth-card p {
-  margin-top: 20px;
+  color: #52635b;
 }
 
 .auth-card a {
   color: var(--primary-color);
   text-decoration: none;
+  font-weight: 700;
 }
 
 .auth-card a:hover {

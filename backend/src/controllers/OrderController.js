@@ -1,18 +1,18 @@
-// controllers/OrderController.js - Order Controller
-// Xử lý các API liên quan đến đơn hàng
-
 const { Order, OrderItem, Product, User, sequelize } = require('../models');
 
-
-// Tạo đơn hàng mới
 const createOrder = async (req, res, next) => {
-  const transaction = await sequelize.transaction(); // Sử dụng transaction để đảm bảo tính toàn vẹn
-
   try {
-    const { items, deliveryAddress, phoneNumber, customerName, paymentMethod, specialInstructions } = req.body;
+    const {
+      items,
+      deliveryAddress,
+      phoneNumber,
+      customerName,
+      paymentMethod,
+      specialInstructions,
+      shippingFee = 0,
+    } = req.body;
     const userId = req.user.id;
 
-    // Validate input
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
         success: false,
@@ -27,104 +27,101 @@ const createOrder = async (req, res, next) => {
       });
     }
 
-    // Tính tổng tiền và validate items
-    let totalAmount = 0;
-    const orderItems = [];
+    const parsedShippingFee = Number.parseFloat(shippingFee || 0) || 0;
+    const transaction = await sequelize.transaction();
 
-    for (const item of items) {
-      const { productId, quantity, size, toppings } = item;
+    try {
+      let totalAmount = 0;
+      const orderItems = [];
 
-      // Kiểm tra sản phẩm tồn tại
-      const product = await Product.findByPk(productId);
-      if (!product || !product.isAvailable) {
-        await transaction.rollback();
-        return res.status(400).json({
-          success: false,
-          message: `Product ${productId} not found or not available`
+      for (const item of items) {
+        const { productId, quantity, size, toppings } = item;
+        const product = await Product.findByPk(productId, { transaction });
+
+        if (!product || !product.isAvailable) {
+          await transaction.rollback();
+          return res.status(400).json({
+            success: false,
+            message: `Product ${productId} not found or not available`
+          });
+        }
+
+        let unitPrice = Number.parseFloat(product.price);
+        if (size === 'large') unitPrice *= 1.5;
+        else if (size === 'small') unitPrice *= 0.8;
+
+        if (toppings && toppings.length > 0) {
+          unitPrice += toppings.length * 20000;
+        }
+
+        const itemTotal = unitPrice * quantity;
+        totalAmount += itemTotal;
+
+        orderItems.push({
+          productId,
+          quantity,
+          unitPrice,
+          totalPrice: itemTotal,
+          size: size || 'medium',
+          toppings: toppings || [],
+          productName: product.name,
+          productDescription: product.description
         });
       }
 
-      // Tính giá dựa trên size (giả lập logic đơn giản)
-      let unitPrice = product.price;
-      if (size === 'large') unitPrice *= 1.5;
-      else if (size === 'small') unitPrice *= 0.8;
+      totalAmount += parsedShippingFee;
 
-      // Thêm phí topping (giả lập)
-      if (toppings && toppings.length > 0) {
-        unitPrice += toppings.length * 2; // $2 mỗi topping
+      const order = await Order.create({
+        userId,
+        totalAmount,
+        deliveryAddress: deliveryAddress.trim(),
+        phoneNumber: phoneNumber.trim(),
+        customerName: customerName.trim(),
+        paymentMethod: paymentMethod || 'cash',
+        specialInstructions: specialInstructions?.trim()
+      }, { transaction });
+
+      for (const item of orderItems) {
+        await OrderItem.create({
+          ...item,
+          orderId: order.id
+        }, { transaction });
       }
 
-      const itemTotal = unitPrice * quantity;
-      totalAmount += itemTotal;
+      await transaction.commit();
 
-      orderItems.push({
-        productId,
-        quantity,
-        unitPrice,
-        totalPrice: itemTotal,
-        size: size || 'medium',
-        toppings: toppings || [],
-        productName: product.name,
-        productDescription: product.description
+      const createdOrder = await Order.findByPk(order.id, {
+        include: [{ model: OrderItem, as: 'items' }]
       });
+
+      res.status(201).json({
+        success: true,
+        message: 'Order created successfully',
+        data: { order: createdOrder }
+      });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
-
-    // Tạo order
-    const order = await Order.create({
-      userId,
-      totalAmount,
-      deliveryAddress: deliveryAddress.trim(),
-      phoneNumber: phoneNumber.trim(),
-      customerName: customerName.trim(),
-      paymentMethod: paymentMethod || 'cash',
-      specialInstructions: specialInstructions?.trim()
-    }, { transaction });
-
-    // Tạo order items
-    for (const item of orderItems) {
-      await OrderItem.create({
-        ...item,
-        orderId: order.id
-      }, { transaction });
-    }
-
-    await transaction.commit();
-
-    // Lấy order với items
-    const createdOrder = await Order.findByPk(order.id, {
-      include: [{ model: OrderItem, as: 'items' }]
-    });
-
-    res.status(201).json({
-      success: true,
-      message: 'Order created successfully',
-      data: { order: createdOrder }
-    });
-
   } catch (error) {
-    await transaction.rollback();
     next(error);
   }
 };
 
-// Lấy đơn hàng của user hiện tại
 const getUserOrders = async (req, res, next) => {
   try {
     const userId = req.user.id;
-
     const orders = await Order.findByUser(userId);
 
     res.json({
       success: true,
       data: { orders }
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-// Lấy chi tiết đơn hàng
 const getOrderById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -149,21 +146,21 @@ const getOrderById = async (req, res, next) => {
       success: true,
       data: { order }
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-// Lấy tất cả đơn hàng (chỉ admin)
 const getAllOrders = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 10 } = req.query;
-
     const where = {};
+
     if (status) where.status = status;
 
-    const offset = (page - 1) * limit;
+    const parsedPage = Number.parseInt(page, 10);
+    const parsedLimit = Number.parseInt(limit, 10);
+    const offset = (parsedPage - 1) * parsedLimit;
 
     const { count, rows: orders } = await Order.findAndCountAll({
       where,
@@ -172,8 +169,8 @@ const getAllOrders = async (req, res, next) => {
         { model: User, as: 'user', attributes: ['id', 'name', 'email'] }
       ],
       order: [['orderTime', 'DESC']],
-      limit: parseInt(limit),
-      offset: parseInt(offset)
+      limit: parsedLimit,
+      offset
     });
 
     res.json({
@@ -182,25 +179,23 @@ const getAllOrders = async (req, res, next) => {
         orders,
         pagination: {
           total: count,
-          page: parseInt(page),
-          limit: parseInt(limit),
-          pages: Math.ceil(count / limit)
+          page: parsedPage,
+          limit: parsedLimit,
+          pages: Math.ceil(count / parsedLimit)
         }
       }
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-// Cập nhật trạng thái đơn hàng (chỉ admin)
 const updateOrderStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { status, deliveryTime } = req.body;
-
     const order = await Order.findByPk(id);
+
     if (!order) {
       return res.status(404).json({
         success: false,
@@ -219,7 +214,6 @@ const updateOrderStatus = async (req, res, next) => {
       message: 'Order status updated successfully',
       data: { order }
     });
-
   } catch (error) {
     next(error);
   }
