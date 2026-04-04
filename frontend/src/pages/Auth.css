@@ -1,0 +1,51 @@
+/* Auth.css */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 30px;
+  color: var(--dark-color);
+}
+
+.auth-card form {
+  margin-bottom: 20px;
+}
+
+.error {
+  color: var(--danger-color);
+  margin-bottom: 15px;
+}
+
+.auth-card p {
+  margin-top: 20px;
+}
+
+.auth-card a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.auth-card a:hover {
+  text-decoration: underline;
+}
