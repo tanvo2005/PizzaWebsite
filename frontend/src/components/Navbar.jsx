@@ -67,10 +67,11 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="container navbar-inner">
           <Link to="/" className="navbar-brand">
-            <span className="brand-badge">Pizza</span>
+            <span className="brand-badge">
+              <img src="/pizzalogo.png" alt="Pizza Slice Icon" /></span>
             <div>
-              <strong>Green Slice</strong>
-              <span>Hot, fast, made fresh.</span>
+              <strong>PizzaHub</strong>
+              <span>Đói ? Có PizzaHub lo!</span>
             </div>
           </Link>
 
@@ -94,13 +95,13 @@ const Navbar = () => {
             <div className="navbar-auth">
               {user ? (
                 <div className="user-info">
-                  <span>Hi, {user.name}</span>
-                  <Button onClick={handleLogout} variant="secondary" size="small">Logout</Button>
+                  <span>Chào, {user.name}</span>
+                  <Button onClick={handleLogout} variant="secondary" size="small">Đăng Xuất</Button>
                 </div>
               ) : (
                 <div className="auth-links">
-                  <Link to="/login"><Button variant="outline" size="small">Login</Button></Link>
-                  <Link to="/register"><Button variant="primary" size="small">Register</Button></Link>
+                  <Link to="/login"><Button variant="outline" size="small">Đăng Nhập</Button></Link>
+                  <Link to="/register"><Button variant="primary" size="small">Đăng Ký</Button></Link>
                 </div>
               )}
             </div>

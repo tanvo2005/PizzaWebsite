@@ -51,38 +51,38 @@ const Home = () => {
       <section className="hero-home">
         <div className="container hero-home-grid">
           <div className="hero-home-copy">
-            <p className="section-kicker">Pizza Ordering Experience</p>
-            <h1>Delicious Pizza Delivered Fast</h1>
+            <p className="section-kicker">Trải nghiệm đặt pizza</p>
+            <h1 style={{fontSize:50}}>Pizza ngon giao hàng nhanh chóng</h1>
             <p>
-              Fresh dough, quality toppings, and a smoother ordering flow from menu to checkout.
+              Nguyên liệu tươi ngon, topping tuyển chọn, cùng quy trình đặt hàng mượt mà từ menu đến thanh toán.
             </p>
 
             {isAuthenticated ? (
               <div className="hero-auth-card">
-                <strong>Welcome, {user.name}</strong>
-                <span>Your cart is now isolated to your account, so each user sees only their own order.</span>
+                <strong>Chào Mừng bạn , {user.name}</strong>
+                <span>Chào mừng bạn đến với PizzaHub – nơi hội tụ những chiếc pizza nóng hổi và ngon khó cưỡng.</span>
               </div>
             ) : null}
 
             <div className="hero-home-actions">
               <Link to="/menu">
-                <Button variant="primary" size="large">Order Now</Button>
+                <Button variant="primary" size="large">Đặt Hàng Ngay</Button>
               </Link>
 
               {!isAuthenticated && (
                 <>
                   <Link to="/login">
-                    <Button variant="outline" size="large">Login</Button>
+                    <Button variant="outline" size="large">Đăng Nhập</Button>
                   </Link>
                   <Link to="/register">
-                    <Button variant="outline" size="large">Create Account</Button>
+                    <Button variant="outline" size="large">Đăng Ký</Button>
                   </Link>
                 </>
               )}
 
               {isAuthenticated && (
                 <Button variant="secondary" size="large" onClick={handleLogout}>
-                  Logout
+                  Đăng Xuất
                 </Button>
               )}
             </div>
@@ -90,10 +90,10 @@ const Home = () => {
 
           <div className="hero-home-visual">
             <div className="hero-card">
-              <img src={heroImage} alt="Fresh pizza on a board" />
+              <img src="/pizzademo.png" alt="Fresh pizza on a board" />
               <div className="hero-card-badge">
-                <strong>Freshly baked every day</strong>
-                <span>Search, order, and checkout with a cleaner storefront experience.</span>
+                {/* <strong>Freshly baked every day</strong>
+                <span>Search, order, and checkout with a cleaner storefront experience.</span> */}
               </div>
             </div>
           </div>
@@ -105,12 +105,12 @@ const Home = () => {
       <section className="home-featured">
         <div className="container">
           <div className="home-section-heading">
-            <p className="section-kicker">Featured Products</p>
-            <h2>Popular pizzas customers keep reordering</h2>
+            <p className="section-kicker">Sản phẩm nổi bật</p>
+            <h2>Những loại pizza được khách hàng yêu thích và liên tục đặt hàng lại.</h2>
           </div>
 
           {loadingProducts ? (
-            <div className="home-state-card">Loading featured pizzas...</div>
+            <div className="home-state-card">Đang tải các loại pizza nổi bật...</div>
           ) : (
             <div className="home-featured-grid">
               {featuredProducts.map((product) => (

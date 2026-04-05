@@ -12,10 +12,10 @@ const SearchBar = ({ value, onChange, onSubmit }) => (
       type="search"
       value={value}
       onChange={(event) => onChange(event.target.value)}
-      placeholder="Search pizzas, toppings..."
+      placeholder="Tìm kiếm pizza yêu thích của bạn ..."
       aria-label="Search products"
     />
-    <button type="submit">Search</button>
+    <button type="submit">Tìm</button>
   </form>
 );
 

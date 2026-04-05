@@ -33,13 +33,18 @@
 
 .navbar-brand strong {
   display: block;
-  font-size: 1rem;
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .navbar-brand span {
   display: block;
   color: #5f6c62;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  letter-spacing: 0.2px;
 }
 
 .brand-badge {
@@ -74,6 +79,8 @@
   color: #1f2937;
   text-decoration: none;
   font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
 }
 
 .navbar-nav a:hover {
@@ -91,6 +98,7 @@
 .user-info span {
   color: #365041;
   font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 @media (max-width: 1080px) {

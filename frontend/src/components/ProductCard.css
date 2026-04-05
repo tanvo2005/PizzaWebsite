@@ -58,6 +58,9 @@
 
 .product-name {
   font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   margin: 0;
   color: #111827;
 }
@@ -65,6 +68,8 @@
 .product-description {
   color: #5f6c62;
   margin: 0;
+  line-height: 1.55;
+  letter-spacing: 0.2px;
 }
 
 .product-footer {
@@ -76,7 +81,8 @@
   margin: 0;
   font-size: 1.2rem;
   color: #15803d;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .product-actions {
