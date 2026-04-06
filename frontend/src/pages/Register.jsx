@@ -56,11 +56,11 @@ const Register = () => {
       <Navbar />
       <div className="auth-container">
         <div className="auth-card">
-          <p className="section-kicker">Create account</p>
-          <h2>Register</h2>
+          <p className="section-kicker">Tạo Tài Khoản Của Bạn</p>
+          <h2>Đăng Ký</h2>
           <form onSubmit={handleSubmit}>
             <InputField
-              label="Full Name"
+              label="Họ Tên"
               type="text"
               name="name"
               value={formData.name}
@@ -76,7 +76,7 @@ const Register = () => {
               required
             />
             <InputField
-              label="Password"
+              label="Mật Khẩu"
               type="password"
               name="password"
               value={formData.password}
@@ -84,7 +84,7 @@ const Register = () => {
               required
             />
             <InputField
-              label="Confirm Password"
+              label="Nhắc lại Mật Khẩu"
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
@@ -93,11 +93,11 @@ const Register = () => {
             />
             {error && <div className="error-message">{error}</div>}
             <Button type="submit" variant="primary" size="large" disabled={loading}>
-              {loading ? 'Creating Account...' : 'Register'}
+              {loading ? 'Creating Account...' : 'Đăng Ký'}
             </Button>
           </form>
           <p className="auth-link">
-            Already have an account? <Link to="/login">Login here</Link>
+            Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
           </p>
         </div>
       </div>

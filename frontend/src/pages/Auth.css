@@ -21,11 +21,20 @@
   max-width: 460px;
   display: grid;
   gap: 18px;
+  /* justify-items: center; */
+}
+.auth-card .section-kicker{
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  color: #0aa674;
+  font-size: 1rem;
 }
 
 .auth-card h2 {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 2rem;
+  text-align: center;
 }
 
 .auth-card form {

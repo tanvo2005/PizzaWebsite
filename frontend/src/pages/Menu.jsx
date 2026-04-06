@@ -1,18 +1,12 @@
 import { useDeferredValue, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import api from '../utils/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
+import { useCart } from '../context/useCart';
+import { PRODUCT_CATEGORIES, normalizeCategoryKey } from '../constants/categories';
+import api from '../utils/api';
 import './Menu.css';
-
-const categories = [
-  { key: 'all', label: 'All pizzas' },
-  { key: 'vegetarian', label: 'Vegetarian' },
-  { key: 'meat', label: 'Meat lovers' },
-  { key: 'vegan', label: 'Vegan' },
-  { key: 'special', label: 'Special' },
-];
 
 const Menu = () => {
   const [products, setProducts] = useState([]);
@@ -20,6 +14,8 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,7 +44,9 @@ const Menu = () => {
 
   const filteredProducts = useMemo(() => (
     products.filter((product) => {
-      const matchesCategory = filter === 'all' || product.category === filter;
+      // normalizeCategoryKey giúp dữ liệu cũ vẫn đi đúng tab mới mà không cần đổi API trả về.
+      const productCategory = normalizeCategoryKey(product.category);
+      const matchesCategory = filter === 'all' || productCategory === filter;
       const matchesSearch = !deferredSearchTerm
         || product.name.toLowerCase().includes(deferredSearchTerm)
         || product.description.toLowerCase().includes(deferredSearchTerm);
@@ -56,6 +54,14 @@ const Menu = () => {
       return matchesCategory && matchesSearch;
     })
   ), [deferredSearchTerm, filter, products]);
+
+  const handleAddToCart = (product) => {
+    const result = addToCart(product);
+
+    if (result?.reason === 'AUTH_REQUIRED') {
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="menu-page">
@@ -65,25 +71,16 @@ const Menu = () => {
         <section className="menu-hero">
           <div className="container menu-hero-inner">
             <div>
-              <p className="section-kicker">Menu</p>
-              <h1>Choose your next hot slice.</h1>
+              <p className="section-kicker">Thực Đơn</p>
+              <h1>Chọn pizza nóng hổi cho bạn ngay hôm nay</h1>
               <p>
-                Browse the full pizza catalog, filter by category, and add items to cart in one click.
+                Hàng trăm lựa chọn hấp dẫn – đặt nhanh, giao tận nơi trong 30 phút.
               </p>
             </div>
 
             <div className="menu-hero-stats">
               <div>
-                <strong>{products.length}</strong>
-                <span>Products</span>
-              </div>
-              <div>
-                <strong>{filteredProducts.length}</strong>
-                <span>Results</span>
-              </div>
-              <div>
-                <strong>{searchTerm ? 'Live' : 'Ready'}</strong>
-                <span>{searchTerm ? `Search: "${searchTerm}"` : 'Search from navbar'}</span>
+                <img src="/pizzangon.png" alt="Hương vị tuyệt vời" />
               </div>
             </div>
           </div>
@@ -91,7 +88,7 @@ const Menu = () => {
 
         <section className="container menu-toolbar">
           <div className="category-pills">
-            {categories.map((category) => (
+            {PRODUCT_CATEGORIES.map((category) => (
               <button
                 key={category.key}
                 type="button"
@@ -105,7 +102,7 @@ const Menu = () => {
 
           {searchTerm && (
             <div className="search-indicator">
-              Filtering by <strong>{searchTerm}</strong>
+              Đang lọc theo từ khóa <strong>{searchTerm}</strong>
             </div>
           )}
         </section>
@@ -116,15 +113,19 @@ const Menu = () => {
 
           {!loading && !error && filteredProducts.length === 0 && (
             <div className="menu-state-card">
-              <h2>No pizzas found</h2>
-              <p>Try another keyword or switch to a different category.</p>
+              <h2>Không tìm thấy món phù hợp</h2>
+              <p>Hãy thử đổi từ khóa tìm kiếm hoặc chọn một danh mục khác.</p>
             </div>
           )}
 
           {!loading && !error && filteredProducts.length > 0 && (
             <div className="products-grid">
               {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                />
               ))}
             </div>
           )}

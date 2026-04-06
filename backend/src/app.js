@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const sequelize = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
+const { backfillLegacyOrderItems } = require('./services/orderItemMigration');
 
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
@@ -62,6 +63,8 @@ const initializeDatabase = async () => {
 
     await sequelize.sync({ alter: true });
     console.log('Database synchronized successfully.');
+
+    await backfillLegacyOrderItems();
   } catch (error) {
     console.error('Database initialization failed:', error);
     process.exit(1);

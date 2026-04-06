@@ -1,98 +1,87 @@
-// models/OrderItem.js - OrderItem Model
-// Định nghĩa model OrderItem cho bảng order_items
-// Model này đại diện cho từng item trong đơn hàng
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
-
-const OrderItem = sequelize.define("OrderItem", {
+const OrderItem = sequelize.define('OrderItem', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
-
   orderId: {
     type: DataTypes.INTEGER,
+    field: 'order_id',
     allowNull: false,
     references: {
-      model: 'Orders',
-      key: 'id'
-    }
+      model: 'orders',
+      key: 'id',
+    },
   },
-
   productId: {
     type: DataTypes.INTEGER,
+    field: 'product_id',
     allowNull: false,
     references: {
-      model: 'Products',
-      key: 'id'
-    }
+      model: 'products',
+      key: 'id',
+    },
   },
-
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
-      min: 1 // Tối thiểu 1 sản phẩm
-    }
+      min: 1,
+    },
   },
-
   unitPrice: {
-    type: DataTypes.DECIMAL(10, 2), // Giá tại thời điểm đặt
+    type: DataTypes.DECIMAL(10, 2),
+    field: 'price',
     allowNull: false,
     validate: {
-      min: 0
-    }
+      min: 0,
+    },
   },
-
   totalPrice: {
-    type: DataTypes.DECIMAL(10, 2), // quantity * unitPrice
+    type: DataTypes.DECIMAL(10, 2),
+    field: 'total_price',
     allowNull: false,
     validate: {
-      min: 0
-    }
+      min: 0,
+    },
   },
-
-  // Tùy chọn cho pizza
   size: {
     type: DataTypes.ENUM('small', 'medium', 'large'),
     defaultValue: 'medium',
-    allowNull: false
+    allowNull: false,
   },
-
   toppings: {
-    type: DataTypes.JSON, // Mảng toppings đã chọn
+    type: DataTypes.JSON,
     allowNull: true,
-    defaultValue: []
+    defaultValue: [],
   },
-
-  // Thông tin sản phẩm tại thời điểm đặt (để tránh thay đổi sau này)
   productName: {
     type: DataTypes.STRING,
-    allowNull: false
+    field: 'product_name',
+    allowNull: false,
   },
-
   productDescription: {
     type: DataTypes.TEXT,
-    allowNull: true
-  }
+    field: 'product_description',
+    allowNull: true,
+  },
 }, {
-  timestamps: true,
+  tableName: 'order_items',
+  timestamps: false,
   indexes: [
-    { fields: ['orderId'] },
-    { fields: ['productId'] }
-  ]
+    { fields: ['order_id'] },
+    { fields: ['product_id'] },
+  ],
 });
 
-// Hooks
 OrderItem.beforeCreate(async (orderItem) => {
-  // Tự động tính totalPrice
   orderItem.totalPrice = parseFloat(orderItem.unitPrice) * orderItem.quantity;
 });
 
 OrderItem.beforeUpdate(async (orderItem) => {
-  // Cập nhật totalPrice khi thay đổi quantity hoặc unitPrice
   if (orderItem.changed('quantity') || orderItem.changed('unitPrice')) {
     orderItem.totalPrice = parseFloat(orderItem.unitPrice) * orderItem.quantity;
   }

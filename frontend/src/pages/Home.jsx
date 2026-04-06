@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import heroImage from '../assets/hero.png';
 import api from '../utils/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -106,7 +105,7 @@ const Home = () => {
         <div className="container">
           <div className="home-section-heading">
             <p className="section-kicker">Sản phẩm nổi bật</p>
-            <h2>Những loại pizza được khách hàng yêu thích và liên tục đặt hàng lại.</h2>
+            <h2>Được chọn nhiều nhất – thử là ghiền.</h2>
           </div>
 
           {loadingProducts ? (
@@ -114,7 +113,7 @@ const Home = () => {
           ) : (
             <div className="home-featured-grid">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} layout="stacked" />
               ))}
             </div>
           )}
@@ -126,25 +125,32 @@ const Home = () => {
       <section className="home-why">
         <div className="container">
           <div className="home-section-heading">
-            <p className="section-kicker">Why Choose Us</p>
-            <h2>Built around fresh ingredients and reliable delivery</h2>
+            <p className="section-kicker">Tại sao nên chọn chúng tôi ?</p>
+            <h2>Pizza tươi mỗi ngày – giao nhanh, ăn là mê</h2>
           </div>
 
           <div className="why-grid">
             <article className="why-card">
-              <div className="why-icon">FI</div>
-              <h3>Fresh Ingredients</h3>
-              <p>We prep vegetables, cheese, and sauces daily to keep every pizza bright and balanced.</p>
+              <div className="why-icon">
+                <img src="/nguyenlieupizza.jpg" alt="Nguyên liệu tươi" />
+              </div>
+              
+              <h3>Nguyên liệu tươi</h3>
+              <p>Từng nguyên liệu được chuẩn bị mỗi ngày, mang đến chiếc pizza nóng hổi và đậm vị.</p>
             </article>
             <article className="why-card">
-              <div className="why-icon">FD</div>
-              <h3>Fast Delivery</h3>
-              <p>The ordering flow is optimized so hot pizzas leave the kitchen quickly and reach you sooner.</p>
+              <div className="why-icon">
+                <img src="/giaohang.jpeg" alt="Giao nhanh" />
+              </div>
+              <h3>Giao nhanh</h3>
+              <p>Chỉ trong 30 phút, pizza nóng hổi sẽ có mặt tại cửa của bạn.</p>
             </article>
             <article className="why-card">
-              <div className="why-icon">BT</div>
-              <h3>Best Taste</h3>
-              <p>We keep the menu focused on combinations people actually love, from classic to signature pies.</p>
+              <div className="why-icon">
+                <img src="/pizzangon.png" alt="Hương vị tuyệt vời" />
+              </div>
+              <h3>Hương vị tuyệt vời</h3>
+              <p>Công thức đặc biệt tạo nên hương vị khiến bạn muốn thưởng thức mãi.</p>
             </article>
           </div>
         </div>

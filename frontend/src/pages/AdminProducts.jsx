@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { ADMIN_PRODUCT_CATEGORIES, getCategoryLabel, normalizeCategoryKey } from '../constants/categories';
 import { resolveImageUrl } from '../utils/images';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -9,7 +10,7 @@ const initialForm = {
   name: '',
   description: '',
   price: '',
-  category: 'meat',
+  category: 'pizza',
   image: '',
   ingredients: '',
   isAvailable: true,
@@ -109,7 +110,8 @@ const AdminProducts = () => {
       name: product.name,
       description: product.description,
       price: product.price,
-      category: product.category,
+      // Khi mở dữ liệu cũ để chỉnh sửa, mình normalize về key mới để dropdown luôn hiển thị hợp lệ.
+      category: normalizeCategoryKey(product.category),
       image: product.image || '',
       ingredients: Array.isArray(product.ingredients) ? product.ingredients.join(', ') : '',
       isAvailable: Boolean(product.isAvailable),
@@ -219,10 +221,11 @@ const AdminProducts = () => {
                   <div className="form-group">
                     <label>Category</label>
                     <select name="category" value={formData.category} onChange={handleInputChange}>
-                      <option value="meat">Meat</option>
-                      <option value="vegetarian">Vegetarian</option>
-                      <option value="vegan">Vegan</option>
-                      <option value="special">Special</option>
+                      {ADMIN_PRODUCT_CATEGORIES.map((category) => (
+                        <option key={category.key} value={category.key}>
+                          {category.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -311,7 +314,11 @@ const AdminProducts = () => {
                     />
                   </td>
                   <td>{product.name}</td>
-                  <td><span className="badge">{product.category}</span></td>
+                  <td>
+                    <span className="badge" title={product.category}>
+                      {getCategoryLabel(product.category)}
+                    </span>
+                  </td>
                   <td>{Number(product.price).toLocaleString('vi-VN')} đ</td>
                   <td>
                     <span className={`status-badge ${product.isAvailable ? 'available' : 'unavailable'}`}>

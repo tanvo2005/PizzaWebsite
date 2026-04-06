@@ -74,7 +74,7 @@ const ProductDetail = () => {
 
             <div className="product-detail-copy">
               <Link to="/menu" className="product-detail-back">← Back to Menu</Link>
-              <span className="product-detail-category">{product.category}</span>
+              {/* <span className="product-detail-category">{product.category}</span> */}
               <h1>{product.name}</h1>
               <p className="product-detail-price">{formatCurrency(product.price)}</p>
               <p className="product-detail-description">{product.description}</p>

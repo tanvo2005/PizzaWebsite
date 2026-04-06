@@ -142,7 +142,7 @@ const createProduct = async (req, res, next) => {
       description: description.trim(),
       price: parsedPrice,
       image: imageUrl,
-      category: category || 'special',
+      category: category || 'pizza',
       ingredients: parsedIngredients || []
     });
 

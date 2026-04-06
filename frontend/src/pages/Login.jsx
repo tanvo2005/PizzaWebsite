@@ -36,8 +36,8 @@ const Login = () => {
       <Navbar />
       <div className="auth-container">
         <div className="auth-card">
-          <p className="section-kicker">Welcome back</p>
-          <h2>Login</h2>
+          <p className="section-kicker">Chào Mừng Trở Lại!</p>
+          <h2>Đăng Nhập</h2>
           <form onSubmit={handleSubmit}>
             <InputField
               label="Email"
@@ -48,7 +48,7 @@ const Login = () => {
               required
             />
             <InputField
-              label="Password"
+              label="Mật Khẩu"
               type="password"
               name="password"
               value={formData.password}
@@ -56,9 +56,9 @@ const Login = () => {
               required
             />
             {error && <p className="error">{error}</p>}
-            <Button type="submit" variant="primary" size="large">Login</Button>
+            <Button type="submit" variant="primary" size="large">Đăng Nhập</Button>
           </form>
-          <p>Don&apos;t have an account? <Link to="/register">Register here</Link></p>
+          <p>Bạn chưa có tài khoản ?  <Link to="/register">Đăng ký ngay</Link></p>
         </div>
       </div>
       <Footer />
