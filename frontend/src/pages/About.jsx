@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import heroImage from '../assets/hero.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
@@ -11,13 +10,20 @@ const About = () => {
       <Navbar />
 
       {/* Hero section: a brand-level introduction page replacing the old profile screen. */}
-      <section className="about-hero">
+      {/* Giữ nguyên cấu trúc JSX để không làm vỡ layout sẵn có của trang About. */}
+      <section
+        className="about-hero"
+        // Dùng ảnh URL để dễ thay thế sau này mà không cần chỉnh lại CSS hoặc assets trong repo.
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591')",
+        }}
+      >
         <div className="container about-hero-content">
-          <p className="section-kicker">About Our Pizza</p>
-          <h1>About Our Pizza</h1>
+          <p className="section-kicker">Giới thiệu</p>
+          <h1>Pizza chuẩn vị – Trải nghiệm trọn vẹn</h1>
           <p>
-            We started with one idea: build a neighborhood pizza brand that feels modern online
-            but still tastes handcrafted and warm in every box.
+            Không chỉ là pizza, chúng tôi mang đến trải nghiệm ẩm thực trọn vẹn trong từng miếng bánh,
+            từ nguyên liệu tươi mới đến cách phục vụ chỉn chu để bạn luôn muốn quay lại.
           </p>
         </div>
       </section>
@@ -27,20 +33,27 @@ const About = () => {
       <section className="about-story">
         <div className="container about-story-grid">
           <div className="about-story-copy">
-            <p className="section-kicker">Our Story</p>
-            <h2>From a small kitchen to a trusted pizza stop</h2>
+            <p className="section-kicker">Câu chuyện</p>
+            <h2>Từ một căn bếp nhỏ đến thương hiệu được tin tưởng</h2>
             <p>
-              Green Slice began as a compact kitchen focused on a short menu done well.
-              Instead of adding everything, we refined dough texture, sauce balance, and oven timing.
+              Chúng tôi bắt đầu từ một căn bếp nhỏ với mục tiêu duy nhất: làm pizza đúng vị.
+              Mỗi ngày, đội ngũ tập trung hoàn thiện công thức bột, cân bằng vị sốt và canh lửa chuẩn,
+              để chiếc pizza khi đến tay bạn vẫn giữ được độ nóng và hương thơm đặc trưng.
             </p>
             <p>
-              Our mission is simple: serve pizza that feels fresh, reliable, and worth ordering again,
-              while keeping the digital experience clear enough that customers never feel lost.
+              Qua thời gian, sự tin yêu của khách hàng đã giúp chúng tôi phát triển,
+              nhưng tinh thần ban đầu vẫn giữ nguyên: làm ra pizza ngon, dễ đặt, giao nhanh,
+              và tạo cảm giác “đáng để quay lại” sau mỗi lần thưởng thức.
             </p>
           </div>
 
+          {/* Cách thay ảnh sau này: chỉ cần đổi URL trong thuộc tính src/style là xong. */}
           <div className="about-story-visual">
-            <img src={heroImage} alt="Pizza close-up" />
+            {/* Thay ảnh bằng URL giúp bạn đổi hình minh họa nhanh trong tương lai. */}
+            <img
+              src="/beplambanh.jpg"
+              alt="Pizza story"
+            />
           </div>
         </div>
       </section>
@@ -50,25 +63,40 @@ const About = () => {
       <section className="about-ingredients">
         <div className="container">
           <div className="home-section-heading">
-            <p className="section-kicker">Ingredients</p>
-            <h2>Fresh materials, no unnecessary shortcuts</h2>
+            <p className="section-kicker">Nguyên liệu</p>
+            <h2>Nguyên liệu tươi – Hương vị thật</h2>
           </div>
 
           <div className="ingredients-grid">
             <article className="ingredient-card">
-              <div className="ingredient-media ingredient-cheese" />
-              <h3>Cheese</h3>
-              <p>We focus on creamy melt and clean flavor so the topping supports the pizza instead of overwhelming it.</p>
+              <div
+                className="ingredient-media ingredient-cheese"
+                style={{
+                  backgroundImage: "url('/phomai.jpg')",
+                }}
+              />
+              <h3>Phô mai</h3>
+              <p>Phô mai béo mịn, kéo sợi đẹp, giúp hương vị đậm đà nhưng không ngấy.</p>
             </article>
             <article className="ingredient-card">
-              <div className="ingredient-media ingredient-tomato" />
-              <h3>Tomato</h3>
-              <p>Our sauce is bright and slightly sweet, designed to stay balanced even after a fast delivery ride.</p>
+              <div
+                className="ingredient-media ingredient-tomato"
+                style={{
+                  backgroundImage: "url('/cachua.jpg')",
+                }}
+              />
+              <h3>Cà chua</h3>
+              <p>Sốt cà chua chua ngọt vừa phải, tạo nền vị cân bằng cho mọi loại topping.</p>
             </article>
             <article className="ingredient-card">
-              <div className="ingredient-media ingredient-dough" />
-              <h3>Dough</h3>
-              <p>We work toward a crust that stays light inside and crisp at the edge, without preservatives.</p>
+              <div
+                className="ingredient-media ingredient-dough"
+                style={{
+                  backgroundImage: "url('/debanh.jpg')",
+                }}
+              />
+              <h3>Đế bánh</h3>
+              <p>Đế bánh lên men tự nhiên, mềm bên trong, giòn nhẹ ở rìa, không chất bảo quản.</p>
             </article>
           </div>
         </div>
@@ -78,28 +106,40 @@ const About = () => {
       <section className="about-team">
         <div className="container">
           <div className="home-section-heading">
-            <p className="section-kicker">Team</p>
-            <h2>The people behind the oven and the order flow</h2>
+            <p className="section-kicker">Đội ngũ</p>
+            <h2>Đội ngũ đứng sau mỗi chiếc pizza</h2>
           </div>
 
           <div className="team-grid">
             <article className="team-card">
-              <div className="team-avatar">AL</div>
-              <h3>Anh Long</h3>
-              <p className="team-role">Head Chef</p>
-              <p>Leads dough consistency, oven timing, and menu development.</p>
+              <div
+                className="team-avatar"
+                style={{ backgroundImage: "url('/beptruong.jpg')" }}
+                title="Bếp trưởng"
+              />
+              <h3>Hoàng Long</h3>
+              <p className="team-role">Bếp trưởng</p>
+              <p>Phụ trách công thức bột và tiêu chuẩn nướng để mỗi chiếc pizza đều đúng vị.</p>
             </article>
             <article className="team-card">
-              <div className="team-avatar">MT</div>
-              <h3>Minh Thu</h3>
-              <p className="team-role">Kitchen Lead</p>
-              <p>Keeps prep quality high and makes sure every order leaves the pass correctly.</p>
+              <div
+                className="team-avatar"
+                style={{ backgroundImage: "url('/quanli.jpg')" }}
+                title="Quản lý bếp"
+              />
+              <h3>Nhật Minh</h3>
+              <p className="team-role">Quản lý bếp</p>
+              <p>Giám sát chất lượng chuẩn bị nguyên liệu và kiểm soát quy trình ra món.</p>
             </article>
             <article className="team-card">
-              <div className="team-avatar">QN</div>
-              <h3>Quang Nam</h3>
-              <p className="team-role">Delivery Ops</p>
-              <p>Coordinates dispatch, timing, and handoff so hot pizzas arrive in better shape.</p>
+              <div
+                className="team-avatar"
+                style={{ backgroundImage: "url('/giaohang.jpg')" }}
+                title="Điều phối giao hàng"
+              />
+              <h3>Huy Hoàng</h3>
+              <p className="team-role">Điều phối giao hàng</p>
+              <p>Tối ưu lộ trình giao để pizza đến tay bạn nóng hổi và đúng giờ.</p>
             </article>
           </div>
         </div>
@@ -109,13 +149,13 @@ const About = () => {
       <section className="about-cta">
         <div className="container about-cta-card">
           <div>
-            <p className="section-kicker">Ready to Order</p>
-            <h2>Taste what all this preparation is for</h2>
-            <p>Browse the menu, pick a favorite, and let us handle the rest.</p>
+            <p className="section-kicker">Gọi món ngay</p>
+            <h2>Sẵn sàng thưởng thức chưa?</h2>
+            <p>Chọn món bạn thích, chúng tôi sẽ chuẩn bị và giao thật nhanh đến tận cửa.</p>
           </div>
 
           <Link to="/menu">
-            <Button variant="primary" size="large">Order Now</Button>
+            <Button variant="primary" size="large">Đặt hàng ngay</Button>
           </Link>
         </div>
       </section>
