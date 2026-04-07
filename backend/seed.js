@@ -26,6 +26,69 @@ const seedData = async () => {
 
     const products = [
       {
+        name: 'Pizza Hải Sản Nhiệt Đới',
+        description: 'Tôm, mực, ngao, dứa, phô mai Mozzarella và xốt cà chua',
+        price: 169000,
+        category: 'pizza', // Danh mục Pizza
+        image: '/pizza-placeholder.svg',
+        ingredients: ['Tôm', 'Mực', 'Dứa', 'Phô mai'],
+        isAvailable: true
+      },
+      {
+        name: 'Pizza Xúc Xích Phô Mai',
+        description: 'Xúc xích Pepperoni cao cấp, phô mai Mozzarella thơm béo',
+        price: 149000,
+        category: 'pizza',
+        image: '/pizza-placeholder.svg',
+        ingredients: ['Xúc xích', 'Phô mai', 'Xốt cà chua'],
+        isAvailable: true
+      },
+      {
+        name: 'Pizza Nấm Thanh Đạm',
+        description: 'Nấm tươi, ớt chuông, hành tây và phô mai',
+        price: 129000,
+        category: 'vegetarian', // Danh mục Chay
+        image: '/pizza-placeholder.svg',
+        ingredients: ['Nấm', 'Ớt chuông', 'Hành tây'],
+        isAvailable: true
+      },
+      {
+        name: 'Gà Rán Giòn Cay (3 miếng)',
+        description: 'Gà tẩm bột chiên giòn rụm, phủ xốt cay Hàn Quốc',
+        price: 89000,
+        category: 'gachien', // Danh mục Gà Chiên
+        image: '/pizza-placeholder.svg',
+        ingredients: ['Thịt gà', 'Bột chiên', 'Xốt cay'],
+        isAvailable: true
+      },
+      {
+        name: 'Khoai Tây Chiên Giòn',
+        description: 'Khoai tây chiên vàng rụm, rắc muối tiêu',
+        price: 49000,
+        category: 'khaivi', // Danh mục Khai vị
+        image: '/pizza-placeholder.svg',
+        ingredients: ['Khoai tây', 'Muối'],
+        isAvailable: true
+      },
+      {
+        name: 'Nước Ngọt Coca Cola',
+        description: 'Lon 330ml mát lạnh',
+        price: 20000,
+        category: 'thucuong', // Danh mục Thức uống
+        image: '/pizza-placeholder.svg',
+        ingredients: [],
+        isAvailable: true
+      },
+      {
+        name: 'Combo Sinh Viên',
+        description: '1 Pizza Nhỏ, 1 Gà rán, 2 Nước ngọt',
+        price: 199000,
+        category: 'compo', // Danh mục Combo
+        image: '/pizza-placeholder.svg',
+        ingredients: [],
+        isAvailable: true
+      },
+      {
         name: 'Margherita Pizza',
         description: 'Classic pizza with fresh tomatoes, mozzarella cheese, and basil leaves',
         price: 129000,
