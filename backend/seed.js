@@ -30,7 +30,7 @@ const seedData = async () => {
         description: 'Tôm, mực, ngao, dứa, phô mai Mozzarella và xốt cà chua',
         price: 169000,
         category: 'pizza', // Danh mục Pizza
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Tôm', 'Mực', 'Dứa', 'Phô mai'],
         isAvailable: true
       },
@@ -39,7 +39,7 @@ const seedData = async () => {
         description: 'Xúc xích Pepperoni cao cấp, phô mai Mozzarella thơm béo',
         price: 149000,
         category: 'pizza',
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Xúc xích', 'Phô mai', 'Xốt cà chua'],
         isAvailable: true
       },
@@ -48,7 +48,7 @@ const seedData = async () => {
         description: 'Nấm tươi, ớt chuông, hành tây và phô mai',
         price: 129000,
         category: 'vegetarian', // Danh mục Chay
-        image: '/pizza-placeholder.svg',
+        image: '/chay.png',
         ingredients: ['Nấm', 'Ớt chuông', 'Hành tây'],
         isAvailable: true
       },
@@ -57,7 +57,7 @@ const seedData = async () => {
         description: 'Gà tẩm bột chiên giòn rụm, phủ xốt cay Hàn Quốc',
         price: 89000,
         category: 'gachien', // Danh mục Gà Chiên
-        image: '/pizza-placeholder.svg',
+        image: '/ga-chien.jpg',
         ingredients: ['Thịt gà', 'Bột chiên', 'Xốt cay'],
         isAvailable: true
       },
@@ -66,7 +66,7 @@ const seedData = async () => {
         description: 'Khoai tây chiên vàng rụm, rắc muối tiêu',
         price: 49000,
         category: 'khaivi', // Danh mục Khai vị
-        image: '/pizza-placeholder.svg',
+        image: '/khai-vi.jpg',
         ingredients: ['Khoai tây', 'Muối'],
         isAvailable: true
       },
@@ -75,7 +75,7 @@ const seedData = async () => {
         description: 'Lon 330ml mát lạnh',
         price: 20000,
         category: 'thucuong', // Danh mục Thức uống
-        image: '/pizza-placeholder.svg',
+        image: '/thuc-uong.png',
         ingredients: [],
         isAvailable: true
       },
@@ -93,7 +93,7 @@ const seedData = async () => {
         description: 'Classic pizza with fresh tomatoes, mozzarella cheese, and basil leaves',
         price: 129000,
         category: 'vegetarian',
-        image: '/pizza-placeholder.svg',
+        image: '/chay.png',
         ingredients: ['Mozzarella', 'Tomato', 'Basil'],
         isAvailable: true
       },
@@ -102,7 +102,7 @@ const seedData = async () => {
         description: 'Spicy pepperoni slices with mozzarella cheese and tomato sauce',
         price: 149000,
         category: 'meat',
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Pepperoni', 'Mozzarella', 'Tomato sauce'],
         isAvailable: true
       },
@@ -111,7 +111,7 @@ const seedData = async () => {
         description: 'Bell peppers, mushrooms, olives, onions, and fresh mozzarella',
         price: 139000,
         category: 'vegetarian',
-        image: '/pizza-placeholder.svg',
+        image: '/chay.png',
         ingredients: ['Bell peppers', 'Mushrooms', 'Olives', 'Onions'],
         isAvailable: true
       },
@@ -120,7 +120,7 @@ const seedData = async () => {
         description: 'Ham, pineapple chunks, mozzarella cheese, and tomato sauce',
         price: 159000,
         category: 'meat',
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Ham', 'Pineapple', 'Mozzarella'],
         isAvailable: true
       },
@@ -129,7 +129,7 @@ const seedData = async () => {
         description: 'Grilled chicken, BBQ sauce, red onions, and cilantro',
         price: 169000,
         category: 'meat',
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Chicken', 'BBQ sauce', 'Red onion'],
         isAvailable: true
       },
@@ -138,7 +138,7 @@ const seedData = async () => {
         description: 'Mozzarella, parmesan, gorgonzola, and ricotta cheeses',
         price: 155000,
         category: 'special',
-        image: '/pizza-placeholder.svg',
+        image: '/pizza.jpg',
         ingredients: ['Mozzarella', 'Parmesan', 'Gorgonzola', 'Ricotta'],
         isAvailable: true
       }
