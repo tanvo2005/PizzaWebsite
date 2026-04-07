@@ -20,21 +20,21 @@ const Cart = () => {
       <main className="container cart-container">
         <section className="cart-header">
           <div>
-            <p className="section-kicker">Cart</p>
-            <h1>Your pizza order</h1>
-            <p>Review items, adjust quantities, then move to checkout.</p>
+            <p className="section-kicker">Giỏ hàng</p>
+            <h1>Đơn Hàng Của Bạn</h1>
+            <p>Kiểm tra lại các mặt hàng, điều chỉnh số lượng, sau đó tiến hành thanh toán.</p>
           </div>
           {cart.length > 0 && (
-            <Button variant="outline" size="small" onClick={clearCart}>Clear Cart</Button>
+            <Button variant="outline" size="small" onClick={clearCart}>Xoá hết</Button>
           )}
         </section>
 
         {cart.length === 0 ? (
           <div className="cart-empty">
-            <h2>Your cart is empty</h2>
-            <p>Head back to the menu and add a few pizzas first.</p>
+            <h2>Giỏ hàng của bạn trống</h2>
+            <p>Quay lại thực đơn và hãy thêm một vài chiếc pizza.</p>
             <Link to="/menu">
-              <Button variant="primary" size="large">Browse Menu</Button>
+              <Button variant="primary" size="large">Thực Đơn</Button>
             </Link>
           </div>
         ) : (
@@ -52,24 +52,24 @@ const Cart = () => {
             </section>
 
             <aside className="cart-summary">
-              <h2>Order Summary</h2>
+              <h2>Thông Tin Đơn Hàng</h2>
               <div>
-                <span>Subtotal</span>
+                <span>Tổng tiền</span>
                 <strong>{formatCurrency(subtotal)}</strong>
               </div>
               <div>
-                <span>Shipping</span>
+                <span>Phí vận chuyển</span>
                 <strong>{formatCurrency(shipping)}</strong>
               </div>
               <div className="cart-summary-total">
-                <span>Total</span>
+                <span>Tổng cộng</span>
                 <strong>{formatCurrency(grandTotal)}</strong>
               </div>
 
               <Button variant="primary" size="large" onClick={() => navigate('/checkout')}>
-                Continue to Checkout
+                Tiếp tục thanh toán
               </Button>
-              <Link to="/menu" className="cart-link">Continue Shopping</Link>
+              <Link to="/menu" className="cart-link">Tiếp tục mua sắm</Link>
             </aside>
           </div>
         )}

@@ -14,14 +14,14 @@ const CartItem = ({ item, onDecrease, onIncrease, onRemove }) => {
       <div className="cart-item-copy">
         <div>
           <h3>{item.name}</h3>
-          <p>Size: {item.size || 'medium'}</p>
+          <p>Size: {item.size || '9""'}</p>
           {item.toppings?.length > 0 && <p>Toppings: {item.toppings.join(', ')}</p>}
         </div>
-        <button type="button" className="cart-remove" onClick={onRemove}>Remove</button>
+        <button type="button" className="cart-remove" onClick={onRemove}>Xoá</button>
       </div>
 
       <div className="cart-item-price">
-        <span>Price</span>
+        <span>Giá</span>
         <strong>{formatCurrency(item.price)}</strong>
       </div>
 
@@ -32,7 +32,7 @@ const CartItem = ({ item, onDecrease, onIncrease, onRemove }) => {
       </div>
 
       <div className="cart-line-total">
-        <span>Total</span>
+        <span>Tổng tiền</span>
         <strong>{formatCurrency(item.price * item.quantity)}</strong>
       </div>
     </div>
