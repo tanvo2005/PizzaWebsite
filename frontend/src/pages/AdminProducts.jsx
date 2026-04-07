@@ -17,6 +17,7 @@ const initialForm = {
 };
 
 const AdminProducts = () => {
+  
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,7 +39,7 @@ const AdminProducts = () => {
       setError('');
     } catch (requestError) {
       console.error('Error fetching products:', requestError);
-      setError('Failed to load products');
+      setError('Không thể tải danh sách sản phẩm');
     } finally {
       setLoading(false);
     }
@@ -101,7 +102,7 @@ const AdminProducts = () => {
       setError('');
     } catch (requestError) {
       console.error('Error saving product:', requestError);
-      setError(requestError.response?.data?.message || 'Failed to save product');
+      setError(requestError.response?.data?.message || 'Không thể lưu sản phẩm');
     }
   };
 
@@ -123,7 +124,7 @@ const AdminProducts = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) {
+    if (!window.confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
       return;
     }
 
@@ -132,7 +133,7 @@ const AdminProducts = () => {
       fetchProducts();
     } catch (requestError) {
       console.error('Error deleting product:', requestError);
-      setError(requestError.response?.data?.message || 'Failed to delete product');
+      setError(requestError.response?.data?.message || 'Không thể xóa sản phẩm');
     }
   };
 
@@ -149,7 +150,7 @@ const AdminProducts = () => {
       <div className="admin-products">
         <Navbar />
         <div className="admin-container">
-          <div className="loading">Loading products...</div>
+          <div className="loading">Đang tải sản phẩm...</div>
         </div>
         <Footer />
       </div>
@@ -162,11 +163,11 @@ const AdminProducts = () => {
       <div className="admin-container">
         <div className="admin-header">
           <div>
-            <p className="section-kicker">Admin catalog</p>
-            <h1>Product Management</h1>
+            <p className="section-kicker">Danh mục quản trị</p>
+            <h1>Quản lý sản phẩm</h1>
           </div>
           <button className="btn btn-primary" onClick={() => setShowForm(true)} type="button">
-            + Add Product
+            + Thêm sản phẩm
           </button>
         </div>
 
@@ -176,37 +177,37 @@ const AdminProducts = () => {
           <div className="modal-overlay">
             <div className="modal">
               <div className="modal-header">
-                <h2>{editingId ? 'Edit Product' : 'Add New Product'}</h2>
-                <button className="close-btn" onClick={resetForm} type="button">×</button>
+                <h2>{editingId ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}</h2>
+                <button className="close-btn" onClick={resetForm} type="button"></button>
               </div>
               <form onSubmit={handleSubmit} className="product-form">
                 <div className="form-group">
-                  <label>Product Name</label>
+                  <label>Tên sản phẩm</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    placeholder="e.g., Margherita Pizza"
+                    placeholder="Ví dụ: Margherita Pizza"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Description</label>
+                  <label>Mô tả</label>
                   <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
                     required
                     rows="3"
-                    placeholder="Product description"
+                    placeholder="Mô tả sản phẩm"
                   />
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Price (VND)</label>
+                    <label>Giá (VND)</label>
                     <input
                       type="number"
                       name="price"
@@ -219,7 +220,7 @@ const AdminProducts = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>Category</label>
+                    <label>Danh mục</label>
                     <select name="category" value={formData.category} onChange={handleInputChange}>
                       {ADMIN_PRODUCT_CATEGORIES.map((category) => (
                         <option key={category.key} value={category.key}>
@@ -231,23 +232,23 @@ const AdminProducts = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Upload image</label>
+                  <label>Tải ảnh lên</label>
                   <input type="file" accept="image/*" onChange={handleFileChange} />
                 </div>
 
                 <div className="form-group">
-                  <label>Image URL (optional)</label>
+                  <label>URL ảnh (tùy chọn)</label>
                   <input
                     type="text"
                     name="image"
                     value={formData.image}
                     onChange={handleInputChange}
-                    placeholder="https://... or keep empty when uploading file"
+                    placeholder="https://... hoặc để trống nếu đã tải ảnh"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Ingredients</label>
+                  <label>Thành phần</label>
                   <input
                     type="text"
                     name="ingredients"
@@ -271,16 +272,16 @@ const AdminProducts = () => {
                       checked={formData.isAvailable}
                       onChange={handleInputChange}
                     />
-                    Available for Order
+                    Có sẵn để bán
                   </label>
                 </div>
 
                 <div className="form-actions">
                   <button type="button" className="btn btn-secondary" onClick={resetForm}>
-                    Cancel
+                    Hủy
                   </button>
                   <button type="submit" className="btn btn-primary">
-                    {editingId ? 'Update' : 'Create'} Product
+                    {editingId ? 'Lưu thay đổi' : 'Tạo sản phẩm'}
                   </button>
                 </div>
               </form>
@@ -292,12 +293,12 @@ const AdminProducts = () => {
           <table className="products-table">
             <thead>
               <tr>
-                <th>Preview</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Xem trước</th>
+                <th>Tên</th>
+                <th>Danh mục</th>
+                <th>Giá</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -319,28 +320,28 @@ const AdminProducts = () => {
                       {getCategoryLabel(product.category)}
                     </span>
                   </td>
-                  <td>{Number(product.price).toLocaleString('vi-VN')} đ</td>
+                  <td>{Number(product.price).toLocaleString('vi-VN')}VNĐ</td>
                   <td>
                     <span className={`status-badge ${product.isAvailable ? 'available' : 'unavailable'}`}>
-                      {product.isAvailable ? 'Available' : 'Unavailable'}
+                      {product.isAvailable ? 'Đang bán' : 'Tạm hết'}
                     </span>
                   </td>
                   <td className="actions">
                     <button
                       className="btn btn-sm btn-warning"
                       onClick={() => handleEdit(product)}
-                      title="Edit"
+                      title="Chỉnh sửa"
                       type="button"
                     >
-                      Edit
+                      Chỉnh sửa
                     </button>
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => handleDelete(product.id)}
-                      title="Delete"
+                      title="Xóa"
                       type="button"
                     >
-                      Delete
+                      Xóa
                     </button>
                   </td>
                 </tr>
@@ -351,7 +352,7 @@ const AdminProducts = () => {
 
         {products.length === 0 && !loading && (
           <div className="empty-state">
-            <p>No products found. Create your first product!</p>
+            <p>Chưa có sản phẩm nào</p>
           </div>
         )}
       </div>

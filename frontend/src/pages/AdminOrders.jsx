@@ -6,15 +6,16 @@ import Footer from '../components/Footer';
 import './AdminOrders.css';
 
 const statusLabels = {
-  pending: 'Pending',
-  confirmed: 'Confirmed',
-  preparing: 'Preparing',
-  ready: 'Ready',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
+  pending: 'Đang chờ',
+  confirmed: 'Đã xác nhận',
+  preparing: 'Đang chuẩn bị',
+  ready: 'Sẵn sàng',
+  delivered: 'Đã giao',
+  cancelled: 'Đã hủy',
 };
 
 const AdminOrders = () => {
+  // Việt hóa toàn bộ text hiển thị nhưng giữ nguyên cấu trúc và logic sẵn có.
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -33,7 +34,7 @@ const AdminOrders = () => {
       setError('');
     } catch (requestError) {
       console.error('Error fetching orders:', requestError);
-      setError('Failed to load orders');
+      setError('Không thể tải đơn hàng');
     } finally {
       setLoading(false);
     }
@@ -45,7 +46,7 @@ const AdminOrders = () => {
       fetchOrders();
     } catch (requestError) {
       console.error('Error updating status:', requestError);
-      setError(requestError.response?.data?.message || 'Failed to update order status');
+      setError(requestError.response?.data?.message || 'Không thể cập nhật trạng thái');
     }
   };
 
@@ -69,7 +70,7 @@ const AdminOrders = () => {
       <div className="admin-orders">
         <Navbar />
         <div className="admin-container">
-          <div className="loading">Loading orders...</div>
+          <div className="loading">Đang tải đơn hàng...</div>
         </div>
         <Footer />
       </div>
@@ -82,11 +83,11 @@ const AdminOrders = () => {
       <div className="admin-container">
         <div className="admin-header">
           <div>
-            <p className="section-kicker">Kitchen flow</p>
-            <h1>Order Management</h1>
+            <p className="section-kicker">Quản lý bếp</p>
+            <h1>Quản lý đơn hàng</h1>
           </div>
           <button className="btn btn-secondary" onClick={fetchOrders} type="button">
-            Refresh
+            Làm mới
           </button>
         </div>
 
@@ -96,20 +97,20 @@ const AdminOrders = () => {
           <div className="modal-overlay">
             <div className="modal modal-lg">
               <div className="modal-header">
-                <h2>Order Details #{selectedOrder.id}</h2>
-                <button className="close-btn" onClick={() => setShowDetails(false)} type="button">×</button>
+                <h2>Chi tiết đơn hàng #{selectedOrder.id}</h2>
+                <button className="close-btn" onClick={() => setShowDetails(false)} type="button">Ã—</button>
               </div>
               <div className="order-details">
                 <div className="details-section">
-                  <h3>Customer Information</h3>
-                  <p><strong>Name:</strong> {selectedOrder.customerName}</p>
-                  <p><strong>Email:</strong> {selectedOrder.user?.email || 'N/A'}</p>
-                  <p><strong>Phone:</strong> {selectedOrder.phoneNumber}</p>
-                  <p><strong>Address:</strong> {selectedOrder.deliveryAddress}</p>
+                  <h3>Thông tin khách hàng</h3>
+                  <p><strong>Tên:</strong> {selectedOrder.customerName}</p>
+                  <p><strong>Email:</strong> {selectedOrder.user?.email || 'Không có'}</p>
+                  <p><strong>Số điện thoại:</strong> {selectedOrder.phoneNumber}</p>
+                  <p><strong>Địa chỉ:</strong> {selectedOrder.deliveryAddress}</p>
                 </div>
 
                 <div className="details-section">
-                  <h3>Order Items</h3>
+                  <h3>Danh sách món</h3>
                   {selectedOrder.items && selectedOrder.items.length > 0 ? (
                     <ul className="items-list">
                       {selectedOrder.items.map((item) => (
@@ -121,17 +122,22 @@ const AdminOrders = () => {
                       ))}
                     </ul>
                   ) : (
-                    <p>No items</p>
+                    <p>Chưa có món nào</p>
                   )}
                 </div>
 
                 <div className="details-section">
-                  <h3>Order Summary</h3>
-                  <p><strong>Status:</strong> <span className={`badge ${getStatusColor(selectedOrder.status)}`}>{statusLabels[selectedOrder.status]}</span></p>
-                  <p><strong>Total Amount:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
-                  <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
-                  <p><strong>Special Instructions:</strong> {selectedOrder.specialInstructions || 'None'}</p>
-                  <p><strong>Ordered at:</strong> {formatDate(selectedOrder.createdAt)}</p>
+                  <h3>Tóm tắt đơn</h3>
+                  <p>
+                    <strong>Trạng thái:</strong>
+                    <span className={`badge ${getStatusColor(selectedOrder.status)}`}>
+                      {statusLabels[selectedOrder.status]}
+                    </span>
+                  </p>
+                  <p><strong>Tổng tiền:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
+                  <p><strong>Phương thức thanh toán:</strong> {selectedOrder.paymentMethod}</p>
+                  <p><strong>Ghi chú:</strong> {selectedOrder.specialInstructions || 'Không có'}</p>
+                  <p><strong>Thời gian đặt:</strong> {formatDate(selectedOrder.createdAt)}</p>
                 </div>
               </div>
             </div>
@@ -142,12 +148,12 @@ const AdminOrders = () => {
           <table className="orders-table">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thời gian</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -174,7 +180,7 @@ const AdminOrders = () => {
                       onClick={() => handleViewDetails(order)}
                       type="button"
                     >
-                      View Details
+                      Xem chi tiết
                     </button>
                   </td>
                 </tr>
@@ -185,7 +191,7 @@ const AdminOrders = () => {
 
         {orders.length === 0 && !loading && (
           <div className="empty-state">
-            <p>No orders found</p>
+            <p>Chưa có đơn hàng nào</p>
           </div>
         )}
       </div>

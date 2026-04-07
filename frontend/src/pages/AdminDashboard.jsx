@@ -1,12 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaBoxArchive, FaReceipt } from 'react-icons/fa6';
 import api from '../utils/api';
 import { formatCurrency } from '../utils/format';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import './Admin.css';
 
+const DashboardActionCard = ({ icon, title, description, to }) => (
+  // Giữ nguyên Link để card vẫn clickable toàn bộ, chỉ cập nhật nội dung UI.
+  <Link to={to} className="action-card">
+    <div className="action-icon">{icon}</div>
+    <div className="action-content">
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
+    <button type="button" className="action-button">
+      Quản lý ngay
+    </button>
+  </Link>
+);
+
 const AdminDashboard = () => {
+  // Giữ nguyên logic và dữ liệu, chỉ làm mới giao diện.
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalOrders: 0,
@@ -46,7 +62,7 @@ const AdminDashboard = () => {
       <div className="admin">
         <Navbar />
         <div className="container">
-          <div className="loading">Loading dashboard...</div>
+          <div className="loading">Đang tải bảng điều khiển...</div>
         </div>
         <Footer />
       </div>
@@ -57,39 +73,39 @@ const AdminDashboard = () => {
     <div className="admin">
       <Navbar />
       <div className="container">
-        <h1>Admin Dashboard</h1>
+        <h1>Bảng điều khiển</h1>
 
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon">Catalog</div>
-            <h3>Total Products</h3>
+            <div className="stat-icon">Danh mục</div>
+            <h3>Tổng sản phẩm</h3>
             <p className="stat-number">{stats.totalProducts}</p>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">Orders</div>
-            <h3>Total Orders</h3>
+            <div className="stat-icon">Đơn hàng</div>
+            <h3>Tổng đơn hàng</h3>
             <p className="stat-number">{stats.totalOrders}</p>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">Revenue</div>
-            <h3>Total Revenue</h3>
+            <div className="stat-icon">Doanh thu</div>
+            <h3>Doanh thu</h3>
             <p className="stat-number">{formatCurrency(stats.totalRevenue)}</p>
           </div>
         </div>
 
         <div className="admin-actions">
-          <Link to="/admin/products" className="action-card">
-            <div className="action-icon">P</div>
-            <h3>Product Management</h3>
-            <p>Upload images, update pricing, and manage menu availability.</p>
-            <span className="action-arrow">→</span>
-          </Link>
-          <Link to="/admin/orders" className="action-card">
-            <div className="action-icon">O</div>
-            <h3>Order Management</h3>
-            <p>Track incoming orders and move them through the kitchen workflow.</p>
-            <span className="action-arrow">→</span>
-          </Link>
+          <DashboardActionCard
+            to="/admin/products"
+            icon={<FaBoxArchive aria-hidden="true" />}
+            title="Quản lý sản phẩm"
+            description="Cập nhật giá bán, hình ảnh và danh mục hiển thị trên menu."
+          />
+          <DashboardActionCard
+            to="/admin/orders"
+            icon={<FaReceipt aria-hidden="true" />}
+            title="Quản lý đơn hàng"
+            description="Theo dõi đơn mới và cập nhật trạng thái xử lý theo quy trình."
+          />
         </div>
       </div>
       <Footer />
