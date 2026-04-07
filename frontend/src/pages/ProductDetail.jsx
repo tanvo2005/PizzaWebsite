@@ -73,7 +73,7 @@ const ProductDetail = () => {
             </div>
 
             <div className="product-detail-copy">
-              <Link to="/menu" className="product-detail-back">← Back to Menu</Link>
+              <Link to="/menu" className="product-detail-back">← Quay lại</Link>
               {/* <span className="product-detail-category">{product.category}</span> */}
               <h1>{product.name}</h1>
               <p className="product-detail-price">{formatCurrency(product.price)}</p>
@@ -81,11 +81,11 @@ const ProductDetail = () => {
 
               <div className="product-detail-meta">
                 <div>
-                  <span>Status</span>
-                  <strong>{product.isAvailable ? 'Ready to order' : 'Currently unavailable'}</strong>
+                  <span>Trạng Thái</span>
+                  <strong>{product.isAvailable ? 'Sẵn sàng để bán' : 'Tạm hết'}</strong>
                 </div>
                 <div>
-                  <span>Ingredients</span>
+                  <span>Thành Phần</span>
                   <strong>
                     {Array.isArray(product.ingredients) && product.ingredients.length > 0
                       ? product.ingredients.join(', ')
@@ -107,7 +107,7 @@ const ProductDetail = () => {
                   disabled={!product.isAvailable}
                   onClick={handleAddToCart}
                 >
-                  Add to Cart
+                  Thêm vào giỏ hàng
                 </Button>
               </div>
             </div>

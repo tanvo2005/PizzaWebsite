@@ -320,7 +320,7 @@ const AdminProducts = () => {
                       {getCategoryLabel(product.category)}
                     </span>
                   </td>
-                  <td>{Number(product.price).toLocaleString('vi-VN')}VNĐ</td>
+                  <td>{Number(product.price).toLocaleString('vi-VN')}</td>
                   <td>
                     <span className={`status-badge ${product.isAvailable ? 'available' : 'unavailable'}`}>
                       {product.isAvailable ? 'Đang bán' : 'Tạm hết'}

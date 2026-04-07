@@ -15,7 +15,7 @@ const About = () => {
         className="about-hero"
         // Dùng ảnh URL để dễ thay thế sau này mà không cần chỉnh lại CSS hoặc assets trong repo.
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591')",
+          backgroundImage: "url('/pizzademo1.jpg')",
         }}
       >
         <div className="container about-hero-content">

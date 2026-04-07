@@ -98,7 +98,7 @@ const AdminOrders = () => {
             <div className="modal modal-lg">
               <div className="modal-header">
                 <h2>Chi tiết đơn hàng #{selectedOrder.id}</h2>
-                <button className="close-btn" onClick={() => setShowDetails(false)} type="button">Ã—</button>
+                <button className="close-btn" onClick={() => setShowDetails(false)} type="button">X</button>
               </div>
               <div className="order-details">
                 <div className="details-section">
