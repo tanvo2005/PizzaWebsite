@@ -22,8 +22,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
 
-          {/* About is public because it is now a store introduction page.
-              We keep /profile mapped for backward compatibility. */}
+          {/* Phần "Giới thiệu" được để công khai vì hiện tại nó là trang giới thiệu cửa hàng.
+            Chúng tôi vẫn giữ nguyên thư mục /profile để đảm bảo khả năng tương thích ngược. */}
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<About />} />
           <Route path="/products/:id" element={<ProductDetail />} />
