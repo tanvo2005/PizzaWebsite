@@ -79,6 +79,7 @@
 .cart-empty p {
   padding-bottom: 20px;
 }
+
 @media (max-width: 980px) {
   .cart-header,
   .cart-layout {

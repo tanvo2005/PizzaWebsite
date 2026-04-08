@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import ProductCard from '../components/ProductCard';
-import Button from '../components/Button';
-import { useAuth } from '../context/useAuth';
-import './Home.css';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../utils/api";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ProductCard from "../components/ProductCard";
+import Button from "../components/Button";
+import { useAuth } from "../context/useAuth";
+import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,13 +20,13 @@ const Home = () => {
     const fetchFeaturedProducts = async () => {
       try {
         setLoadingProducts(true);
-        const response = await api.get('/products', {
+        const response = await api.get("/products", {
           params: { available: true },
         });
 
         setFeaturedProducts((response.data.data?.products || []).slice(0, 4));
       } catch (error) {
-        console.error('Error fetching featured products:', error);
+        console.error("Error fetching featured products:", error);
         setFeaturedProducts([]);
       } finally {
         setLoadingProducts(false);
@@ -38,7 +38,7 @@ const Home = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -51,30 +51,40 @@ const Home = () => {
         <div className="container hero-home-grid">
           <div className="hero-home-copy">
             <p className="section-kicker">Trải nghiệm đặt pizza</p>
-            <h1 style={{fontSize:50}}>Pizza ngon giao hàng nhanh chóng</h1>
+            <h1 style={{ fontSize: 50 }}>Pizza ngon giao hàng nhanh chóng</h1>
             <p>
-              Nguyên liệu tươi ngon, topping tuyển chọn, cùng quy trình đặt hàng mượt mà từ menu đến thanh toán.
+              Nguyên liệu tươi ngon, topping tuyển chọn, cùng quy trình đặt hàng
+              mượt mà từ menu đến thanh toán.
             </p>
 
             {isAuthenticated ? (
               <div className="hero-auth-card">
                 <strong>Chào Mừng bạn , {user.name}</strong>
-                <span>Chào mừng bạn đến với PizzaHub – nơi hội tụ những chiếc pizza nóng hổi và ngon khó cưỡng.</span>
+                <span>
+                  Chào mừng bạn đến với PizzaHub – nơi hội tụ những chiếc pizza
+                  nóng hổi và ngon khó cưỡng.
+                </span>
               </div>
             ) : null}
 
             <div className="hero-home-actions">
               <Link to="/menu">
-                <Button variant="primary" size="large">Đặt Hàng Ngay</Button>
+                <Button variant="primary" size="large">
+                  Đặt Hàng Ngay
+                </Button>
               </Link>
 
               {!isAuthenticated && (
                 <>
                   <Link to="/login">
-                    <Button variant="outline" size="large">Đăng Nhập</Button>
+                    <Button variant="outline" size="large">
+                      Đăng Nhập
+                    </Button>
                   </Link>
                   <Link to="/register">
-                    <Button variant="outline" size="large">Đăng Ký</Button>
+                    <Button variant="outline" size="large">
+                      Đăng Ký
+                    </Button>
                   </Link>
                 </>
               )}
@@ -109,11 +119,17 @@ const Home = () => {
           </div>
 
           {loadingProducts ? (
-            <div className="home-state-card">Đang tải các loại pizza nổi bật...</div>
+            <div className="home-state-card">
+              Đang tải các loại pizza nổi bật...
+            </div>
           ) : (
             <div className="home-featured-grid">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} layout="stacked" />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  layout="stacked"
+                />
               ))}
             </div>
           )}
@@ -134,23 +150,31 @@ const Home = () => {
               <div className="why-icon">
                 <img src="/nguyenlieupizza.jpg" alt="Nguyên liệu tươi" />
               </div>
-              
+
               <h3>Nguyên liệu tươi</h3>
-              <p>Từng nguyên liệu được chuẩn bị mỗi ngày, mang đến chiếc pizza nóng hổi và đậm vị.</p>
+              <p>
+                Từng nguyên liệu được chuẩn bị mỗi ngày, mang đến chiếc pizza
+                nóng hổi và đậm vị.
+              </p>
             </article>
             <article className="why-card">
               <div className="why-icon">
                 <img src="/giaohang.jpeg" alt="Giao nhanh" />
               </div>
               <h3>Giao nhanh</h3>
-              <p>Chỉ trong 30 phút, pizza nóng hổi sẽ có mặt tại cửa của bạn.</p>
+              <p>
+                Chỉ trong 30 phút, pizza nóng hổi sẽ có mặt tại cửa của bạn.
+              </p>
             </article>
             <article className="why-card">
               <div className="why-icon">
                 <img src="/pizzangon.png" alt="Hương vị tuyệt vời" />
               </div>
               <h3>Hương vị tuyệt vời</h3>
-              <p>Công thức đặc biệt tạo nên hương vị khiến bạn muốn thưởng thức mãi.</p>
+              <p>
+                Công thức đặc biệt tạo nên hương vị khiến bạn muốn thưởng thức
+                mãi.
+              </p>
             </article>
           </div>
         </div>
