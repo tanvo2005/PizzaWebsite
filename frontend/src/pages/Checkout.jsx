@@ -43,7 +43,7 @@ const Checkout = () => {
     event.preventDefault();
 
     if (cart.length === 0) {
-      setError('Your cart is empty.');
+      setError('Giỏ hàng của bạn đang trống.');
       return;
     }
 
@@ -61,7 +61,7 @@ const Checkout = () => {
       clearCart();
     } catch (requestError) {
       console.error('Checkout failed:', requestError);
-      setError(requestError.response?.data?.message || 'Failed to place order.');
+      setError(requestError.response?.data?.message || 'Không thể đặt hàng. Vui lòng thử lại.');
     } finally {
       setPlacingOrder(false);
     }
@@ -74,44 +74,44 @@ const Checkout = () => {
       <main className="container checkout-container">
         <section className="checkout-header">
           <div>
-            <p className="section-kicker">Checkout</p>
-            <h1>Confirm delivery and payment</h1>
-            <p>Shipping fee is fixed at {formatCurrency(SHIPPING_FEE)} and COD is selected by default.</p>
+            <p className="section-kicker">Thanh toán</p>
+            <h1>Xác nhận giao hàng và thanh toán</h1>
+            {/* <p>Phí ship cố định {formatCurrency(SHIPPING_FEE)} và mặc định thanh toán tiền mặt.</p> */}
           </div>
         </section>
 
         {orderResult ? (
           <div className="checkout-success">
-            <h2>Order placed successfully</h2>
-            <p>Your order #{orderResult.id} has been created and is now waiting for confirmation.</p>
+            <h2>Đặt hàng thành công</h2>
+            <p>Đơn hàng #{orderResult.id} đã được tạo và đang chờ xác nhận.</p>
             <div className="checkout-success-grid">
               <div>
-                <span>Total amount</span>
+                <span>Tổng tiền</span>
                 <strong>{formatCurrency(orderResult.totalAmount)}</strong>
               </div>
               <div>
-                <span>Status</span>
+                <span>Trạng thái</span>
                 <strong>{orderResult.status}</strong>
               </div>
               <div>
-                <span>Payment</span>
+                <span>Thanh toán</span>
                 <strong>{orderResult.paymentMethod}</strong>
               </div>
             </div>
           </div>
         ) : cart.length === 0 ? (
           <div className="checkout-success">
-            <h2>Your cart is empty</h2>
-            <p>Add a few pizzas to the cart before continuing to checkout.</p>
+            <h2>Giỏ hàng đang trống</h2>
+            <p>Hãy thêm vài món trước khi tiếp tục thanh toán.</p>
           </div>
         ) : (
           <div className="checkout-layout">
             <form className="checkout-form" onSubmit={handleSubmit}>
               <div className="checkout-card">
-                <h2>Delivery Information</h2>
+                <h2>Thông tin giao hàng</h2>
 
                 <label>
-                  Full name
+                  Họ và tên
                   <input
                     type="text"
                     name="customerName"
@@ -122,7 +122,7 @@ const Checkout = () => {
                 </label>
 
                 <label>
-                  Phone number
+                  Số điện thoại
                   <input
                     type="tel"
                     name="phoneNumber"
@@ -134,7 +134,7 @@ const Checkout = () => {
                 </label>
 
                 <label>
-                  Delivery address
+                  Địa chỉ giao hàng
                   <textarea
                     name="deliveryAddress"
                     value={formData.deliveryAddress}
@@ -146,7 +146,7 @@ const Checkout = () => {
               </div>
 
               <div className="checkout-card">
-                <h2>Payment Method</h2>
+                <h2>Phương thức thanh toán</h2>
 
                 <label className="checkout-radio">
                   <input
@@ -157,47 +157,19 @@ const Checkout = () => {
                     onChange={handleChange}
                   />
                   <div>
-                    <strong>COD</strong>
-                    <span>Pay in cash when the order arrives.</span>
-                  </div>
-                </label>
-
-                <label className="checkout-radio">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="card"
-                    checked={formData.paymentMethod === 'card'}
-                    onChange={handleChange}
-                  />
-                  <div>
-                    <strong>Card</strong>
-                    <span>Card payment option is prepared in the order payload.</span>
-                  </div>
-                </label>
-
-                <label className="checkout-radio">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="online"
-                    checked={formData.paymentMethod === 'online'}
-                    onChange={handleChange}
-                  />
-                  <div>
-                    <strong>Online</strong>
-                    <span>Use this value when integrating a gateway later.</span>
+                    <strong>Tiền mặt</strong>
+                    <span>Thanh toán khi nhận hàng.</span>
                   </div>
                 </label>
 
                 <label>
-                  Special instructions
+                  Ghi chú
                   <textarea
                     name="specialInstructions"
                     value={formData.specialInstructions}
                     onChange={handleChange}
                     rows="3"
-                    placeholder="Extra chili flakes, call before delivery..."
+                    placeholder="Ít cay, gọi trước khi giao..."
                   />
                 </label>
               </div>
@@ -205,13 +177,13 @@ const Checkout = () => {
               {error && <div className="checkout-error">{error}</div>}
 
               <Button type="submit" variant="primary" size="large" disabled={placingOrder}>
-                {placingOrder ? 'Placing order...' : 'Place Order'}
+                {placingOrder ? 'Đang đặt hàng...' : 'Đặt hàng'}
               </Button>
             </form>
 
             <aside className="checkout-summary">
               <div className="checkout-card">
-                <h2>Order Summary</h2>
+                <h2>Tóm tắt đơn hàng</h2>
 
                 <div className="checkout-lines">
                   {cart.map((item) => (
@@ -224,15 +196,15 @@ const Checkout = () => {
 
                 <div className="checkout-totals">
                   <div>
-                    <span>Subtotal</span>
+                    <span>Tạm tính</span>
                     <strong>{formatCurrency(subtotal)}</strong>
                   </div>
                   <div>
-                    <span>Shipping</span>
+                    <span>Phí giao hàng</span>
                     <strong>{formatCurrency(shipping)}</strong>
                   </div>
                   <div className="checkout-grand-total">
-                    <span>Total</span>
+                    <span>Tổng cộng</span>
                     <strong>{formatCurrency(total)}</strong>
                   </div>
                 </div>

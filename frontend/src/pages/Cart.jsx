@@ -21,28 +21,24 @@ const Cart = () => {
       <main className="container cart-container">
         <section className="cart-header">
           <div>
-            <p className="section-kicker">Cart</p>
-            <h1>Đơn đặt hàng pizza của bạn</h1>
-            <p style={{ paddingTop: 10 }}>
-              Kiểm tra lại các mặt hàng, điều chỉnh số lượng, sau đó tiến hành
-              thanh toán.
-            </p>
+
+            <p className="section-kicker">Giỏ hàng</p>
+            <h1>Đơn Hàng Của Bạn</h1>
+            <p>Kiểm tra lại các mặt hàng, điều chỉnh số lượng, sau đó tiến hành thanh toán.</p>
           </div>
           {cart.length > 0 && (
-            <Button variant="outline" size="small" onClick={clearCart}>
-              Clear Cart
-            </Button>
+            <Button variant="outline" size="small" onClick={clearCart}>Xoá hết</Button>
           )}
         </section>
 
         {cart.length === 0 ? (
           <div className="cart-empty">
             <h2>Giỏ hàng của bạn trống</h2>
-            <p>Quay lại thực đơn và thêm một vài chiếc pizza trước.</p>
+
+            <p>Quay lại thực đơn và hãy thêm một vài chiếc pizza.</p>
             <Link to="/menu">
-              <Button variant="primary" size="large">
-                Duyệt Menu
-              </Button>
+              <Button variant="primary" size="large">Thực Đơn</Button>
+
             </Link>
           </div>
         ) : (
@@ -76,19 +72,22 @@ const Cart = () => {
             </section>
 
             <aside className="cart-summary">
-              <h2>Tóm tắt đơn hàng</h2>
+
+              <h2>Thông Tin Đơn Hàng</h2>
+
               <div>
-                <span>Subtotal</span>
+                <span>Tổng tiền</span>
                 <strong>{formatCurrency(subtotal)}</strong>
               </div>
               <div>
-                <span>Shipping</span>
+                <span>Phí vận chuyển</span>
                 <strong>{formatCurrency(shipping)}</strong>
               </div>
               <div className="cart-summary-total">
-                <span>Total</span>
+                <span>Tổng cộng</span>
                 <strong>{formatCurrency(grandTotal)}</strong>
               </div>
+
 
               <Button
                 variant="primary"
@@ -100,6 +99,7 @@ const Cart = () => {
               <Link to="/menu" className="cart-link">
                 Tiếp tục mua sắm
               </Link>
+
             </aside>
           </div>
         )}

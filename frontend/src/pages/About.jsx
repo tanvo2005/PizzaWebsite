@@ -15,7 +15,7 @@ const About = () => {
         className="about-hero"
         // Dùng ảnh URL để dễ thay thế sau này mà không cần chỉnh lại CSS hoặc assets trong repo.
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591')",
+          backgroundImage: "url('/pizzademo1.jpg')",
         }}
       >
         <div className="container about-hero-content">
@@ -23,7 +23,7 @@ const About = () => {
           <h1>Pizza chuẩn vị – Trải nghiệm trọn vẹn</h1>
           <p>
             Không chỉ là pizza, chúng tôi mang đến trải nghiệm ẩm thực trọn vẹn trong từng miếng bánh,
-            từ nguyên liệu tươi mới đến cách phục vụ chỉn chu để bạn luôn muốn quay lại.
+            từ nguyên liệu tươi mới đến cách phục vụ chỉnh chu để bạn luôn muốn quay lại.
           </p>
         </div>
       </section>
@@ -102,7 +102,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team cards humanize the brand and make the About page feel complete. */}
+      {/* taoj 
+      . */}
       <section className="about-team">
         <div className="container">
           <div className="home-section-heading">
