@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import api from '../utils/api';
-import { formatCurrency } from '../utils/format';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import './AdminOrders.css';
+import { useState, useEffect } from "react";
+import api from "../utils/api";
+import { formatCurrency } from "../utils/format";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import "./AdminOrders.css";
 
 const statusLabels = {
-  pending: 'Đang chờ',
-  confirmed: 'Đã xác nhận',
-  preparing: 'Đang chuẩn bị',
-  ready: 'Sẵn sàng',
-  delivered: 'Đã giao',
-  cancelled: 'Đã hủy',
+  pending: "Đang chờ",
+  confirmed: "Đã xác nhận",
+  preparing: "Đang chuẩn bị",
+  ready: "Sẵn sàng",
+  delivered: "Đã giao",
+  cancelled: "Đã hủy",
 };
 
 const AdminOrders = () => {
   // Việt hóa toàn bộ text hiển thị nhưng giữ nguyên cấu trúc và logic sẵn có.
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -29,12 +29,12 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/orders');
+      const response = await api.get("/orders");
       setOrders(response.data.data?.orders || []);
-      setError('');
+      setError("");
     } catch (requestError) {
-      console.error('Error fetching orders:', requestError);
-      setError('Không thể tải đơn hàng');
+      console.error("Error fetching orders:", requestError);
+      setError("Không thể tải đơn hàng !");
     } finally {
       setLoading(false);
     }
@@ -45,8 +45,10 @@ const AdminOrders = () => {
       await api.put(`/orders/${orderId}`, { status: newStatus });
       fetchOrders();
     } catch (requestError) {
-      console.error('Error updating status:', requestError);
-      setError(requestError.response?.data?.message || 'Không thể cập nhật trạng thái');
+      console.error("Error updating status:", requestError);
+      setError(
+        requestError.response?.data?.message || "Không thể cập nhật trạng thái",
+      );
     }
   };
 
@@ -57,20 +59,21 @@ const AdminOrders = () => {
 
   const getStatusColor = (status) => `status-${status}`;
 
-  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString("vi-VN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
   if (loading) {
     return (
       <div className="admin-orders">
         <Navbar />
         <div className="admin-container">
-          <div className="loading">Đang tải đơn hàng...</div>
+          <div className="loading">Đang tải đơn hàng....</div>
         </div>
         <Footer />
       </div>
@@ -86,7 +89,11 @@ const AdminOrders = () => {
             <p className="section-kicker">Quản lý bếp</p>
             <h1>Quản lý đơn hàng</h1>
           </div>
-          <button className="btn btn-secondary" onClick={fetchOrders} type="button">
+          <button
+            className="btn btn-secondary"
+            onClick={fetchOrders}
+            type="button"
+          >
             Làm mới
           </button>
         </div>
@@ -97,16 +104,25 @@ const AdminOrders = () => {
           <div className="modal-overlay">
             <div className="modal modal-lg">
               <div className="modal-header">
-                <h2>Chi tiết đơn hàng #{selectedOrder.id}</h2>
+                <h2>Chi tiết đơn hàng #{selectedOrder.id}<
                 <button className="close-btn" onClick={() => setShowDetails(false)} type="button">X</button>
               </div>
               <div className="order-details">
                 <div className="details-section">
                   <h3>Thông tin khách hàng</h3>
-                  <p><strong>Tên:</strong> {selectedOrder.customerName}</p>
-                  <p><strong>Email:</strong> {selectedOrder.user?.email || 'Không có'}</p>
-                  <p><strong>Số điện thoại:</strong> {selectedOrder.phoneNumber}</p>
-                  <p><strong>Địa chỉ:</strong> {selectedOrder.deliveryAddress}</p>
+                  <p>
+                    <strong>Tên:</strong> {selectedOrder.customerName}
+                  </p>
+                  <p>
+                    <strong>Email:</strong>{" "}
+                    {selectedOrder.user?.email || "Không có"}
+                  </p>
+                  <p>
+                    <strong>Số điện thoại:</strong> {selectedOrder.phoneNumber}
+                  </p>
+                  <p>
+                    <strong>Địa chỉ:</strong> {selectedOrder.deliveryAddress}
+                  </p>
                 </div>
 
                 <div className="details-section">
@@ -115,14 +131,16 @@ const AdminOrders = () => {
                     <ul className="items-list">
                       {selectedOrder.items.map((item) => (
                         <li key={item.id}>
-                          <strong>{item.productName || item.product?.name}</strong>
+                          <strong>
+                            {item.productName || item.product?.name}
+                          </strong>
                           <span>x{item.quantity}</span>
                           <span>{formatCurrency(item.totalPrice)}</span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p>Chưa có món nào</p>
+                    <p>Chưa có món nào cả</p>
                   )}
                 </div>
 
@@ -130,14 +148,28 @@ const AdminOrders = () => {
                   <h3>Tóm tắt đơn</h3>
                   <p>
                     <strong>Trạng thái:</strong>
-                    <span className={`badge ${getStatusColor(selectedOrder.status)}`}>
+                    <span
+                      className={`badge ${getStatusColor(selectedOrder.status)}`}
+                    >
                       {statusLabels[selectedOrder.status]}
                     </span>
                   </p>
-                  <p><strong>Tổng tiền:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
-                  <p><strong>Phương thức thanh toán:</strong> {selectedOrder.paymentMethod}</p>
-                  <p><strong>Ghi chú:</strong> {selectedOrder.specialInstructions || 'Không có'}</p>
-                  <p><strong>Thời gian đặt:</strong> {formatDate(selectedOrder.createdAt)}</p>
+                  <p>
+                    <strong>Tổng tiền:</strong>{" "}
+                    {formatCurrency(selectedOrder.totalAmount)}
+                  </p>
+                  <p>
+                    <strong>Phương thức thanh toán:</strong>{" "}
+                    {selectedOrder.paymentMethod}
+                  </p>
+                  <p>
+                    <strong>Ghi chú:</strong>{" "}
+                    {selectedOrder.specialInstructions || "Không có"}
+                  </p>
+                  <p>
+                    <strong>Thời gian đặt:</strong>{" "}
+                    {formatDate(selectedOrder.createdAt)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -166,10 +198,14 @@ const AdminOrders = () => {
                     <select
                       className={`status-select ${getStatusColor(order.status)}`}
                       value={order.status}
-                      onChange={(event) => handleStatusChange(order.id, event.target.value)}
+                      onChange={(event) =>
+                        handleStatusChange(order.id, event.target.value)
+                      }
                     >
                       {Object.entries(statusLabels).map(([status, label]) => (
-                        <option key={status} value={status}>{label}</option>
+                        <option key={status} value={status}>
+                          {label}
+                        </option>
                       ))}
                     </select>
                   </td>
