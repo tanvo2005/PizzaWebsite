@@ -1,11 +1,11 @@
-# 🔌 Pizza Ordering System - API Endpoints Reference
+#  Pizza Ordering System - API Endpoints Reference
 
 ## Base URL
 ```
 http://localhost:5000/api
 ```
 
-## 🔐 Authentication Endpoints
+##  Authentication Endpoints
 
 ### Register User
 ```http
@@ -106,7 +106,7 @@ Response (200):
 
 ---
 
-## 🍕 Product Endpoints
+##  Product Endpoints
 
 ### Get All Products (Public)
 ```http
@@ -236,7 +236,7 @@ Response (200):
 
 ---
 
-## 📦 Order Endpoints
+##  Order Endpoints
 
 ### Create Order (User - Protected)
 ```http
@@ -391,7 +391,7 @@ Response (200):
 
 ---
 
-## ✅ Health Check
+##  Health Check
 
 ### Server Health
 ```http
@@ -426,7 +426,7 @@ Response (200):
 
 ---
 
-## 🔄 Status Codes Reference
+##  Status Codes Reference
 
 | Code | Meaning | Example |
 |------|---------|---------|
@@ -440,7 +440,7 @@ Response (200):
 
 ---
 
-## 🔑 Authentication
+##  Authentication
 
 ### Token Format
 ```
@@ -453,7 +453,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-## 📊 Order Status Values
+##  Order Status Values
 
 ```javascript
 Status Options:
@@ -466,7 +466,7 @@ Status Options:
 
 ---
 
-## 🏷️ Product Category Values
+##  Product Category Values
 
 ```javascript
 Categories:
@@ -476,7 +476,7 @@ Categories:
 
 ---
 
-## 📋 Error Response Format
+##  Error Response Format
 
 ```json
 {
@@ -521,7 +521,7 @@ Categories:
 
 ---
 
-## 🧪 Sample cURL Commands
+##  Sample cURL Commands
 
 ### Register User
 ```bash
@@ -577,7 +577,7 @@ curl -X POST http://localhost:5000/api/products \
 
 ---
 
-## 🎯 Integration Example (JavaScript/Axios)
+##  Integration Example (JavaScript/Axios)
 
 ```javascript
 import axios from 'axios';
@@ -619,7 +619,7 @@ async function createOrder(orderData) {
 
 ---
 
-## 📞 Support
+##  Support
 
 For issues or questions about API endpoints:
 1. Check the TESTING_GUIDE.md for common issues
