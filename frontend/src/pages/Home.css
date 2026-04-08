@@ -20,7 +20,6 @@
   gap: 18px;
 }
 
-
 .hero-home-copy h1 {
   margin: 0;
   font-size: clamp(2.8rem, 6vw, 4.6rem);
@@ -98,7 +97,6 @@
   padding: 0 0 80px;
 }
 
-
 .home-section-heading {
   display: grid;
   gap: 10px;
@@ -132,7 +130,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 } */
- .why-section {
+.why-section {
   width: 100%;
   padding: 80px 60px;
   background: #f9fafb;
@@ -152,8 +150,7 @@
   border: 1px solid rgba(22, 101, 52, 0.08);
 }
 
-
- .why-icon {
+.why-icon {
   width: 100%;
   height: 58px;
   display: inline-flex;
